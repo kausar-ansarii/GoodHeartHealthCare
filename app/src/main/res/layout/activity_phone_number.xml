@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".phoneNumber">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+       android:paddingTop="100dp"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/dashlogo"
+            android:layout_width="400dp"
+            android:layout_height="140dp">
+
+        </ImageView>
+    <TextView
+
+        android:layout_gravity="left"
+        android:id="@+id/phone_number"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingLeft="20dp"
+        android:text="Enter Your Phone Number"
+        android:textSize="31dp"
+
+        android:textStyle="bold"
+        android:textColor="@color/mainColor"
+        />
+
+
+       <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Your Phone Number "
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:inputType="number"
+        android:paddingTop="20dp"
+           app:backgroundTint="@color/mainColor"
+           />
+
+    <Button
+        android:id="@+id/OTP_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send OTP"
+        android:gravity="center"
+        android:layout_gravity="center"
+
+        />
+    </LinearLayout>
+</LinearLayout>
