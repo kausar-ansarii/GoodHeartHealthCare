@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".OTPScreen">
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="200dp"
+            android:text="Enter OTP sent to +91 9999999999"
+            android:textColor="@color/mainColor"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingLeft="60dp">
+
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/OTP_field1"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:inputType="number"
+            app:backgroundTint="@color/mainColor">
+        </androidx.appcompat.widget.AppCompatEditText>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/OTP_field2"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:inputType="number"
+            app:backgroundTint="@color/mainColor">
+        </androidx.appcompat.widget.AppCompatEditText>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/OTP_field3"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:inputType="number"
+            app:backgroundTint="@color/mainColor">
+        </androidx.appcompat.widget.AppCompatEditText>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/OTP_field4"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:inputType="number"
+            app:backgroundTint="@color/mainColor">
+        </androidx.appcompat.widget.AppCompatEditText>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/OTP_field5"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:inputType="number"
+            app:backgroundTint="@color/mainColor">
+        </androidx.appcompat.widget.AppCompatEditText>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/OTP_field6"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:inputType="number"
+            app:backgroundTint="@color/mainColor">
+        </androidx.appcompat.widget.AppCompatEditText>
+
+
+        />
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
