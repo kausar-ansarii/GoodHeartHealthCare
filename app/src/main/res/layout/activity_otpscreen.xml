@@ -9,88 +9,120 @@
     tools:context=".OTPScreen">
 
     <LinearLayout
-
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+       >
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/dashlogo"
+            android:layout_width="400dp"
+            android:layout_height="140dp"
+            android:contentDescription="Logo">
 
+        </ImageView>
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="20dp"
-            android:paddingTop="200dp"
+            android:layout_height="70dp"
+            android:paddingStart="20sp"
+            android:paddingEnd="20sp"
+            android:paddingTop="20sp"
             android:text="Enter OTP sent to +91 9999999999"
             android:textColor="@color/mainColor"
-            android:textSize="23dp"
+            android:textSize="23sp"
+            android:gravity="center_horizontal"
             android:textStyle="bold"
             />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:paddingLeft="60dp">
-
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:gravity="center">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/OTP_field1"
             android:layout_width="45dp"
+            android:textAlignment="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:inputType="number"
+            android:maxLength="1"
             app:backgroundTint="@color/mainColor">
         </androidx.appcompat.widget.AppCompatEditText>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/OTP_field2"
             android:layout_width="45dp"
+            android:textAlignment="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:inputType="number"
+            android:maxLength="1"
             app:backgroundTint="@color/mainColor">
         </androidx.appcompat.widget.AppCompatEditText>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/OTP_field3"
             android:layout_width="45dp"
+            android:textAlignment="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:inputType="number"
+            android:maxLength="1"
             app:backgroundTint="@color/mainColor">
         </androidx.appcompat.widget.AppCompatEditText>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/OTP_field4"
             android:layout_width="45dp"
+            android:textAlignment="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:inputType="number"
+            android:maxLength="1"
             app:backgroundTint="@color/mainColor">
         </androidx.appcompat.widget.AppCompatEditText>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/OTP_field5"
             android:layout_width="45dp"
+            android:textAlignment="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:inputType="number"
+            android:maxLength="1"
             app:backgroundTint="@color/mainColor">
         </androidx.appcompat.widget.AppCompatEditText>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/OTP_field6"
             android:layout_width="45dp"
+            android:textAlignment="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:inputType="number"
+            android:maxLength="1"
             app:backgroundTint="@color/mainColor">
         </androidx.appcompat.widget.AppCompatEditText>
 
 
-        />
+
+
+    </LinearLayout>
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/OTP_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Verify"
+            />
     </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+
 
 
 
