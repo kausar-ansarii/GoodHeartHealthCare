@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".LoginActivity"
+    tools:context=".LoginReceptionist"
     android:paddingTop="100dp">
 
 
@@ -21,46 +21,46 @@
 
     <TextView
         android:paddingLeft="20dp"
-    android:layout_gravity="left"
-    android:text="Login"
-    android:textSize="35dp"
-    android:layout_width="wrap_content"
+        android:layout_gravity="left"
+        android:text="Login As Receptionist"
+        android:textSize="35dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-    android:textStyle="bold"
-    android:textColor="@color/mainColor"
-    >
+        android:textStyle="bold"
+        android:textColor="@color/mainColor"
+        >
 
     </TextView>
 
-<androidx.appcompat.widget.AppCompatEditText
-    android:id="@+id/emailTextField"
-    android:inputType="textEmailAddress"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="32dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginEnd="32dp"
-    app:backgroundTint="@color/mainColor"
-    android:hint="Enter your Email">
-
-</androidx.appcompat.widget.AppCompatEditText>
-
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/passTextField"
+        android:id="@+id/ReceptionistUserID"
+        android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"
         app:backgroundTint="@color/mainColor"
-        android:hint="Provide your Password">
+        android:hint="User ID">
+
+    </androidx.appcompat.widget.AppCompatEditText>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/ReceptionistPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="32dp"
+        app:backgroundTint="@color/mainColor"
+        android:hint="Password">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
 
     <!--sample button to submit entered data inside from edit text-->
     <Button
-        android:id="@+id/submit_button"
+        android:id="@+id/receptionistLogin_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -68,17 +68,6 @@
         android:layout_marginEnd="32dp"
         android:text="Login" />
 
-    <TextView
-        android:paddingTop="10dp"
-        android:id="@+id/forgotPassText"
-        android:text="Forgot Password ?"
-        android:textColor="@color/mainColor"
-        android:gravity="center_horizontal"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </TextView>
 
     <!--text view which previews the entered data by user-->
 
@@ -87,37 +76,19 @@
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/text_preview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Don't have an Account ? "
-            android:textSize="18sp" />
+
 
         <TextView
-            android:id="@+id/signupText"
+            android:id="@+id/PatientLoginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Sign Up"
+            android:text="Login As Patient"
             android:textColor="#ff0000"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-
     </LinearLayout>
-    <TextView
-        android:id="@+id/ReceptionistLoginText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Login As Receptionist"
-        android:textColor="@color/mainColor"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="15dp"/>
-
 
 
 </LinearLayout>

@@ -5,12 +5,15 @@
       <map>
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/drawable/buttongradient.xml" value="0.1945" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1945" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_login.xml" value="0.18" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_login_receptionist.xml" value="0.1675929884566054" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_onboarding_screen.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_otpscreen.xml" value="0.1675929884566054" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_patient_dashboard.xml" value="0.1675929884566054" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_phone_number.xml" value="0.16047144152311876" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_signup_form.xml" value="0.16047144152311876" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_receptionist_dashboard.xml" value="0.15604959384352288" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_signup_form.xml" value="0.2" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/layout/activity_splash_screen.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1945" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1945" />
