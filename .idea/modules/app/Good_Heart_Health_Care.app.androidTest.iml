@@ -108,6 +108,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.firebase:firebase-database-collection:18.0.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.firebase:firebase-storage:20.0.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.ramotion.paperonboarding:paper-onboarding:1.1.3@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.daimajia.androidanimations:library:2.4@aar" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="Good_Heart_Health_Care.app.main" />
 </module>
