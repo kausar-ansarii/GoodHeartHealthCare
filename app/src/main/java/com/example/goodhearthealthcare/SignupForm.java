@@ -2,10 +2,12 @@ package com.example.goodhearthealthcare;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -16,6 +18,7 @@ public class SignupForm extends AppCompatActivity {
 
     TextInputEditText patientGender,patientMarital;
     Spinner marital_spinner;
+    Button submitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,17 @@ public class SignupForm extends AppCompatActivity {
         patientGender = findViewById(R.id.patientGender);
         patientMarital = findViewById(R.id.patientMarital);
         marital_spinner = findViewById(R.id.marital_spinner);
+
+        submitButton = findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         //SPINNER(Dropdown --> In android we call it as Spinner) CODE FOR MARITAL STATUS
         ArrayAdapter<CharSequence> adapter4Marital = ArrayAdapter.createFromResource(this, R.array.marital_array, android.R.layout.simple_spinner_item);

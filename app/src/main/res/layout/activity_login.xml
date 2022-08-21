@@ -19,12 +19,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:paddingLeft="20dp"
         android:text="Login"
         android:textColor="@color/mainColor"
-        android:textSize="35dp"
-        android:textStyle="bold"></TextView>
+        android:textSize="30sp"
+        android:fontFamily="@font/cantora_one"
+        android:layout_margin="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,10 +66,22 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/forgotPassText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:padding="10dp"
+            android:text="Forgot Password?"
+            android:textColor="@color/mainColor"
+            android:textSize="18sp"
+            android:textAllCaps="true"
+            android:fontFamily="@font/cantora_one"
+            android:letterSpacing=".1"/>
+
     </LinearLayout>
 
     <!--sample button to submit entered data inside from edit text-->
-
     <Button
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
@@ -80,18 +91,6 @@
         android:layout_marginEnd="32dp"
         android:text="Login"
         android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/forgotPassText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingTop="10dp"
-        android:text="Forgot Password ?"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp">
-
-    </TextView>
 
     <!--text view which previews the entered data by user-->
 

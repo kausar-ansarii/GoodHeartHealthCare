@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextView signUpEditText, LoginReceptionist;
+    TextView signUpEditText, LoginReceptionist, forgotPassText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +18,15 @@ public class LoginActivity extends AppCompatActivity {
 
         signUpEditText = findViewById(R.id.signupText);
         LoginReceptionist = findViewById(R.id.ReceptionistLoginText);
+        forgotPassText = findViewById(R.id.forgotPassText);
+        forgotPassText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPassword.class);
+                startActivity(intent);
+            }
+        });
+
         LoginReceptionist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
