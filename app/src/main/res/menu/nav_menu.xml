@@ -12,6 +12,11 @@
             android:icon="@drawable/profile_menu"/>
 
         <item
+            android:id="@+id/navMediProfile"
+            android:title="Medical Profile"
+            android:icon="@drawable/hospital"/>
+
+        <item
             android:id="@+id/navContactUs"
             android:title="Contact Us"
             android:icon="@drawable/contact_menu"/>

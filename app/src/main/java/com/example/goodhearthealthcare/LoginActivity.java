@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         signUpEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent otpScreen = new Intent(LoginActivity.this, phoneNumber.class);
+                Intent otpScreen = new Intent(LoginActivity.this, SignupForm.class);
                 startActivity(otpScreen);
 
             }
