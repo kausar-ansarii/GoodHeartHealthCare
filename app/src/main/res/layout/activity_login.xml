@@ -83,7 +83,7 @@
 
     <!--sample button to submit entered data inside from edit text-->
     <Button
-        android:id="@+id/submit_button"
+        android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"

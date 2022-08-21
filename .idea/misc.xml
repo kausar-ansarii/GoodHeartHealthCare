@@ -6,6 +6,7 @@
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/back.xml" value="0.123" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/buttongradient.xml" value="0.123" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/spinner_arrow.xml" value="0.123" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_add_diseases.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_forgot_password.xml" value="0.21197916666666666" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_login.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_login_receptionist.xml" value="0.22552083333333334" />
@@ -17,8 +18,8 @@
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_receptionist_dashboard.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_signup_form.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_splash_screen.xml" value="0.22552083333333334" />
-        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_about.xml" value="0.21197916666666666" />
-        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_contact.xml" value="0.22552083333333334" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_about.xml" value="0.2" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_contact.xml" value="0.2" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_home.xml" value="0.21197916666666666" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_profile.xml" value="0.21197916666666666" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/nav_header.xml" value="0.22552083333333334" />

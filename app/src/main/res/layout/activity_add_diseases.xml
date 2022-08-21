@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddDiseasesActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tell us more about you,\nto provide better medication"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nunito_sans"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Are you a diabetic patient?"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/nunito_sans"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupDiabetic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/patientEmailLay">
+
+            <RadioButton
+                android:id="@+id/diabeticYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonDiabeticCLicked"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="YES"
+                android:textColor="@color/purple_700"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/diabeticNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonDiabeticCLicked"
+                android:paddingStart="10dp"
+                android:text="NO"
+                android:textColor="@color/purple_700"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/linearDiabetic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/diabeticSince"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Since(yrs)"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/diabeticBefore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Before food"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/diabeticAfter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="After food"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Any previous medication going on?"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/nunito_sans"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupPreviousMedication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/patientEmailLay">
+
+            <RadioButton
+                android:id="@+id/previousMedicationYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonPreMediCLicked"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="YES"
+                android:textColor="@color/purple_700"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/previousMedicationNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonPreMediCLicked"
+                android:paddingStart="10dp"
+                android:text="NO"
+                android:textColor="@color/purple_700"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/linearPreviousMedication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/previousMedicationSince"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Since(yrs)"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/previousMedicationCause"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="For what"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/diseaseProceedBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Proceed"
+            android:textStyle="bold"
+            android:fontFamily="@font/nunito_sans"
+            android:textSize="17sp"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,15 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.AboutFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="about"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-</FrameLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:src="@drawable/dashlogo"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cherry_cream_soda"
+            android:gravity="center"
+            android:text="Good Heart Health\nCare"
+            android:textSize="24sp"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MISSION"
+            android:gravity="center"
+            android:layout_marginTop="25dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/nunito_sans"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in risus in odio ornare lacinia ac eu neque. Vivamus sit amet tellus laoreet, vestibulum sapien sed, faucibus urna. Integer sit amet lacus porta, ultricies lacus quis, tincidunt tellus. Nulla quis viverra ipsum, in porttitor erat. Morbi enim dui, lacinia nec dui eget, elementum dapibus purus. Aenean iaculis augue ut odio egestas consequat. Aenean vulputate, libero ac commodo malesuada, magna arcu mollis lorem, quis maximus tellus eros sed enim. Ut gravida fermentum congue. Vivamus luctus molestie fringilla. Nullam venenatis, massa laoreet interdum dapibus, augue lorem venenatis ligula, non molestie dolor arcu et arcu."
+            android:textSize="17sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VISSION"
+            android:gravity="center"
+            android:layout_marginTop="25dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/nunito_sans"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Etiam posuere justo tellus, id porttitor elit tristique non. Aliquam maximus nulla suscipit, tincidunt odio quis, finibus ex. Integer ac imperdiet ex. Quisque ante leo, lobortis quis laoreet ac, fringilla eget enim. Maecenas vel cursus lectus. Nunc condimentum quam tortor, in fringilla ex volutpat quis. Sed semper consectetur lacus ac sodales. Sed venenatis, dolor nec malesuada venenatis, turpis augue dignissim nisi, sed vestibulum elit turpis non nunc. Donec ac leo ut felis pellentesque aliquet sed in neque. Etiam iaculis, magna vitae hendrerit placerat, dui risus tempor sapien, et viverra tortor dui a leo. Sed id egestas purus. Suspendisse scelerisque dui eget orci vehicula, ornare consectetur justo dignissim. Quisque pellentesque suscipit cursus. Nam bibendum sit amet metus at luctus. Phasellus vel mollis ipsum, in auctor lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OATH"
+            android:gravity="center"
+            android:layout_marginTop="25dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/nunito_sans"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Nullam eget porta velit, vel tincidunt nulla. Maecenas sed pellentesque nisi, vitae lacinia ex. Nam eros odio, tristique condimentum ante et, tristique dignissim felis. Quisque sit amet ornare nisi. Nullam congue nunc vitae ligula aliquet, sed euismod dui ultricies. Integer pretium consequat erat id mattis. Nulla a aliquam lorem, ac convallis lacus. Sed commodo, turpis vitae pharetra vehicula, lorem dui interdum ipsum, a consectetur massa mauris vitae lectus. Pellentesque in sem dignissim, egestas ligula eu, mattis urna. Integer sit amet odio quis sapien sagittis malesuada sed in nisi. Aliquam commodo vitae eros eu iaculis."
+            android:textSize="17sp"/>
+    </LinearLayout>
+</ScrollView>
