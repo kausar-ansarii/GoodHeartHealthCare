@@ -1,92 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".LoginActivity"
-    android:paddingTop="100dp">
+    android:paddingTop="100dp"
+    tools:context=".LoginActivity">
 
 
     <ImageView
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/dashlogo"
         android:layout_width="400dp"
-        android:layout_height="140dp">
-
-    </ImageView>
+        android:layout_height="140dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/dashlogo" />
 
     <TextView
-        android:paddingLeft="20dp"
-    android:layout_gravity="left"
-    android:text="Login"
-    android:textSize="35dp"
-    android:layout_width="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-    android:textStyle="bold"
-    android:textColor="@color/mainColor"
-    >
+        android:layout_gravity="left"
+        android:paddingLeft="20dp"
+        android:text="Login"
+        android:textColor="@color/mainColor"
+        android:textSize="35dp"
+        android:textStyle="bold"></TextView>
 
-    </TextView>
-
-<androidx.appcompat.widget.AppCompatEditText
-    android:id="@+id/emailTextField"
-    android:inputType="textEmailAddress"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="32dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginEnd="32dp"
-    app:backgroundTint="@color/mainColor"
-    android:hint="Enter your Email">
-
-</androidx.appcompat.widget.AppCompatEditText>
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/passTextField"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="32dp"
-        app:backgroundTint="@color/mainColor"
-        android:hint="Provide your Password">
+        android:orientation="vertical"
+        android:padding="15dp">
 
-    </androidx.appcompat.widget.AppCompatEditText>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter E-mail"
+            app:hintEnabled="true">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/mainColor"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Provide your password"
+            app:counterEnabled="true"
+            app:counterMaxLength="12"
+            app:hintEnabled="true"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <!--sample button to submit entered data inside from edit text-->
+
     <Button
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:text="Login" />
+        android:text="Login"
+        android:textSize="18sp" />
 
     <TextView
-        android:paddingTop="10dp"
         android:id="@+id/forgotPassText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
         android:text="Forgot Password ?"
         android:textColor="@color/mainColor"
-        android:gravity="center_horizontal"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:textSize="18sp">
 
     </TextView>
 
     <!--text view which previews the entered data by user-->
 
     <LinearLayout
-        android:paddingTop="10dp"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp">
+
         <TextView
             android:id="@+id/text_preview"
             android:layout_width="wrap_content"
@@ -107,17 +121,17 @@
 
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/ReceptionistLoginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="15dp"
         android:text="Login As Receptionist"
         android:textColor="@color/mainColor"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="15dp"/>
-
+        android:textStyle="bold" />
 
 
 </LinearLayout>

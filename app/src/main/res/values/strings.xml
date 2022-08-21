@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Good Heart Health Care</string>
+
+    <string-array name="marital_array">
+        <item>Married</item>
+        <item>Unmarried</item>
+        <item>Divorced</item>
+        <item>Widowed</item>
+    </string-array>
 </resources>
