@@ -214,6 +214,92 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Do you have any allergies?"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/nunito_sans"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupAllergies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/patientEmailLay">
+
+            <RadioButton
+                android:id="@+id/allergiesYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonAllergiesClicked"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="YES"
+                android:textColor="@color/purple_700"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/allergiesNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonAllergiesClicked"
+                android:paddingStart="10dp"
+                android:text="NO"
+                android:textColor="@color/purple_700"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/linearAllergies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/allergiesSince"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Since(yrs)"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/allergiesCause"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Of what"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
         <Button
             android:id="@+id/diseaseProceedBtn"
             android:layout_width="match_parent"

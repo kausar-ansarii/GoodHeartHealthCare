@@ -22,6 +22,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.example.goodhearthealthcare.fragments.AboutFragment;
 import com.example.goodhearthealthcare.fragments.ContactFragment;
 import com.example.goodhearthealthcare.fragments.HomeFragment;
+import com.example.goodhearthealthcare.fragments.MedicalProfile;
 import com.example.goodhearthealthcare.fragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,6 +92,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.navProfile:
                 setProfileFragment();
                 break;
+            case R.id.navMediProfile:
+                setMedicalProfileFragment();
+                break;
             case R.id.navAboutUs:
                 setAboutFragment();
                 break;
@@ -115,6 +119,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setProfileFragment() {
         getSupportFragmentManager().beginTransaction().replace(R.id.container,new ProfileFragment()).commit();
         getSupportActionBar().setTitle("Profile");
+        setAnimation();
+    }
+
+    private void setMedicalProfileFragment() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,new MedicalProfile()).commit();
+        getSupportActionBar().setTitle("Medical Profile");
         setAnimation();
     }
 
