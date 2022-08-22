@@ -12,4 +12,24 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="specialist">
+        <item>Pediatrician</item>
+        <item>Gynecologist</item>
+        <item>Cardiologist</item>
+        <item>Oncologist</item>
+        <item>Gastroenterologist</item>
+        <item>Pulmonologist</item>
+        <item>Nephrologist</item>
+        <item>Endocrinologist</item>
+        <item>Ophthalmologist</item>
+        <item>Otolaryngologist</item>
+        <item>Dermatologist</item>
+        <item>Psychiatrist</item>
+        <item>Neurologist</item>
+        <item>Radiologist</item>
+        <item>Anesthesiologist</item>
+        <item>Surgeon</item>
+    </string-array>
+
 </resources>

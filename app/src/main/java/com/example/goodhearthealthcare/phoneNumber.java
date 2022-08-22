@@ -14,7 +14,7 @@ public class phoneNumber extends AppCompatActivity {
 
     TextInputLayout phoneTextField;
     Button sendOtpBtn;
-    String phone, email, password, fName, lName, dob, age, address, city, district, pincode, gender, marital, altPhone;
+    //String phone, email, password, fName, lName, dob, age, address, city, district, pincode, gender, marital, altPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class phoneNumber extends AppCompatActivity {
         setContentView(R.layout.activity_phone_number);
 
         phoneTextField = findViewById(R.id.phoneTextField);
-        phone = getIntent().getStringExtra("phone");
+        /*phone = getIntent().getStringExtra("phone");
         email = getIntent().getStringExtra("email");
         password = getIntent().getStringExtra("password");
         fName = getIntent().getStringExtra("fName");
@@ -37,7 +37,7 @@ public class phoneNumber extends AppCompatActivity {
         pincode = getIntent().getStringExtra("pincode");
         altPhone = getIntent().getStringExtra("AltPhone");
 
-        phoneTextField.getEditText().setText(phone);
+        phoneTextField.getEditText().setText(phone);*/
 
         sendOtpBtn = findViewById(R.id.sendOtpBtn);
         sendOtpBtn.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +49,7 @@ public class phoneNumber extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(phoneNumber.this, OTPScreen.class);
                     intent.putExtra("phone",num);
-                    intent.putExtra("email",email);
+                    /*intent.putExtra("email",email);
                     intent.putExtra("password",password);
                     intent.putExtra("fName", fName);
                     intent.putExtra("lName", lName);
@@ -61,7 +61,7 @@ public class phoneNumber extends AppCompatActivity {
                     intent.putExtra("city", city);
                     intent.putExtra("district", district);
                     intent.putExtra("pincode", pincode);
-                    intent.putExtra("AltPhone", altPhone);
+                    intent.putExtra("AltPhone", altPhone);*/
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();

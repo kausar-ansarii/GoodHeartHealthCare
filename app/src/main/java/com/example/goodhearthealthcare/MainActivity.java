@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navView;
     Toolbar toolbar;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    //FirebaseUser currentUser = mAuth.getCurrentUser();
     //String currentUserID = mAuth.getCurrentUser().getUid();
     //DocumentReference usersRef;
     //FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setContactFragment();
                 break;
             case R.id.navLogout:
-                //mAuth.signOut();
+                mAuth.signOut();
                 sendUserToLogin();
                 break;
         }
@@ -181,4 +180,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) {
+            // User is signed in
+            Intent mainIntent = new Intent(MainActivity.this,LoginActivity.class);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(mainIntent);
+            finish();
+        }
+    }
+
 }

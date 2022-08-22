@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".LoginReceptionist"
+    tools:context=".receptionist.LoginReceptionist"
     android:paddingTop="100dp">
 
 
@@ -44,7 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/mainColor"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="GoodHealth"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +64,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="GoodPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

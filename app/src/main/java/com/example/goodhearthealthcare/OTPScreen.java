@@ -32,7 +32,8 @@ import java.util.concurrent.TimeUnit;
 public class OTPScreen extends AppCompatActivity {
 
     Button OTP_button;
-    String userID, number, otpID, email, password, fName, lName, dob, age, address, city, district, pincode, gender, marital, altPhone;
+    //String userID, number, otpID, email, password, fName, lName, dob, age, address, city, district, pincode, gender, marital, altPhone;
+    String number, otpID;
     TextView otpText;
     FirebaseAuth mAuth;
     ProgressDialog dialog;
@@ -49,7 +50,7 @@ public class OTPScreen extends AppCompatActivity {
         dialog = new ProgressDialog(this);
 
         number = getIntent().getStringExtra("phone");
-        email = getIntent().getStringExtra("email");
+        /*email = getIntent().getStringExtra("email");
         password = getIntent().getStringExtra("password");
 
         fName = getIntent().getStringExtra("fName");
@@ -62,7 +63,7 @@ public class OTPScreen extends AppCompatActivity {
         city = getIntent().getStringExtra("city");
         district = getIntent().getStringExtra("district");
         pincode = getIntent().getStringExtra("pincode");
-        altPhone = getIntent().getStringExtra("AltPhone");
+        altPhone = getIntent().getStringExtra("AltPhone");*/
         mAuth = FirebaseAuth.getInstance();
 
         otpTextField = findViewById(R.id.otpTextField);
@@ -92,7 +93,8 @@ public class OTPScreen extends AppCompatActivity {
     }
 
     private void initiateOTP() {
-        dialog.setMessage("please wait");
+        dialog.setTitle("please wait...");
+        dialog.setMessage("OTP has been initialized. Please wait for auto detect.");
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
         PhoneAuthOptions options =
@@ -129,8 +131,13 @@ public class OTPScreen extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    AuthCredential credentialAuth = EmailAuthProvider.getCredential(email, password);
-                    mAuth.getCurrentUser().linkWithCredential(credentialAuth);
+                    Toast.makeText(getApplicationContext(), "OTP Verified ", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), SignupForm.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                    /*AuthCredential credentialAuth = EmailAuthProvider.getCredential(email, password);
+                    mAuth.getCurrentUser().linkWithCredential(credentialAuth);*/
                     /*FirebaseUser user = task.getResult().getUser();
                     String userID = user.getUid();
 
@@ -156,7 +163,7 @@ public class OTPScreen extends AppCompatActivity {
                         }
                     });*/
 
-                    userID = mAuth.getCurrentUser().getUid();
+                    /*userID = mAuth.getCurrentUser().getUid();
                     HashMap patientMap = new HashMap();
                     patientMap.put("fName", fName);
                     patientMap.put("lName", lName);
@@ -190,7 +197,7 @@ public class OTPScreen extends AppCompatActivity {
                             }
                             dialog.dismiss();
                         }
-                    });
+                    });*/
 
                     /*dialog.setTitle("please wait...");
                     dialog.setMessage("creation of account and saving of data is in progress. don't click back button");

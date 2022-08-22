@@ -1,8 +1,7 @@
-package com.example.goodhearthealthcare;
+package com.example.goodhearthealthcare.receptionist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.goodhearthealthcare.LoginActivity;
+import com.example.goodhearthealthcare.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginReceptionist extends AppCompatActivity {
@@ -43,19 +44,19 @@ public class LoginReceptionist extends AppCompatActivity {
     }
 
     private void loginValidation() {
-        String useridstring = UserID.getEditText().getText().toString().trim();
-        String passwordstring = Password.getEditText().getText().toString().trim();
+        String userIdString = UserID.getEditText().getText().toString().trim();
+        String passwordString = Password.getEditText().getText().toString().trim();
 
-        if (useridstring.isEmpty() || passwordstring.isEmpty()) {
+        if (userIdString.isEmpty() || passwordString.isEmpty()) {
             Toast.makeText(this, "Field's are empty", Toast.LENGTH_SHORT).show();
         } else {
-            if (useridstring.equals("GoodHealth") && passwordstring.equals("GoodPassword")) {
+            if (userIdString.equals("GoodHealth") && passwordString.equals("GoodPassword")) {
                 Intent intent = new Intent(LoginReceptionist.this, ReceptionistDashboard.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             } else {
-                Log.d("Error Credentials", "Credentials are incorrect");
+                Toast.makeText(this, "Error Credentials! Credentials are incorrect", Toast.LENGTH_SHORT).show();
             }
 
         }

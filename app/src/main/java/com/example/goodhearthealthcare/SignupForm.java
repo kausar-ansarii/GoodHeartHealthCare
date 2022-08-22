@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,10 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -52,6 +51,7 @@ public class SignupForm extends AppCompatActivity {
     FirebaseAuth mAuth;
     ProgressDialog loadingBar;
     DatabaseReference patientsRef;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,22 +194,46 @@ public class SignupForm extends AppCompatActivity {
                         email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(SignupForm.this, "Field's are empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), phoneNumber.class);
-                    intent.putExtra("phone",phone);
-                    intent.putExtra("email",email);
-                    intent.putExtra("password",password);
-                    intent.putExtra("fName", fName);
-                    intent.putExtra("lName", lName);
-                    intent.putExtra("dob", dob);
-                    intent.putExtra("age", age);
-                    intent.putExtra("gender", gender);
-                    intent.putExtra("marital", marital);
-                    intent.putExtra("address", address);
-                    intent.putExtra("city", city);
-                    intent.putExtra("district", district);
-                    intent.putExtra("pincode", pincode);
-                    intent.putExtra("AltPhone", altPhone);
-                    startActivity(intent);
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+                    loadingBar.setTitle("please wait...");
+                    loadingBar.setMessage("account creation is in progress don't press back button");
+                    loadingBar.setCanceledOnTouchOutside(false);
+                    loadingBar.show();
+                    userID = mAuth.getCurrentUser().getUid();
+                    HashMap patientMap = new HashMap();
+                    patientMap.put("fName", fName);
+                    patientMap.put("lName", lName);
+                    patientMap.put("DOB", dob);
+                    patientMap.put("Age", age);
+                    patientMap.put("Gender", gender);
+                    patientMap.put("MaritalStatus", marital);
+                    patientMap.put("Address", address);
+                    patientMap.put("City", city);
+                    patientMap.put("District", district);
+                    patientMap.put("Pincode", pincode);
+                    patientMap.put("Phone", phone);
+                    patientMap.put("AltPhone", altPhone);
+                    patientMap.put("Email", email);
+                    patientMap.put("Password", password);
+                    patientMap.put("image", "default");
+                    patientMap.put("userID", userID);
+                    patientsRef.child(userID).updateChildren(patientMap).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                AuthCredential credentialAuth = EmailAuthProvider.getCredential(email, password);
+                                mAuth.getCurrentUser().linkWithCredential(credentialAuth);
+                                Intent intent = new Intent(getApplicationContext(), AddDiseasesActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                String msg = task.getException().getMessage();
+                                Toast.makeText(SignupForm.this, msg, Toast.LENGTH_SHORT).show();
+                            }
+                            loadingBar.dismiss();
+                        }
+                    });
                     /*loadingBar.setTitle("please wait...");
                     loadingBar.setMessage("creation of account and saving of data is in progress. Don't click back button");
                     loadingBar.setCanceledOnTouchOutside(false);
