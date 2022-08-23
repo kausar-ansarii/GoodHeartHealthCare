@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // If we have more than one fragment, pop back stack
             getSupportFragmentManager().popBackStack();
             getSupportActionBar().show();
+            setDrawer_UnLocked();
         } else if (fragmentsInStack == 1) {
             // Finish activity, if only one fragment left, to prevent leaving empty screen
             finish();
