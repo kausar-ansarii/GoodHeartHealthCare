@@ -217,6 +217,8 @@ public class SignupForm extends AppCompatActivity {
                     patientMap.put("Password", password);
                     patientMap.put("image", "default");
                     patientMap.put("userID", userID);
+                    patientMap.put("BMI", "00");
+                    patientMap.put("BMR", "00");
                     patientsRef.child(userID).updateChildren(patientMap).addOnCompleteListener(new OnCompleteListener() {
                         @Override
                         public void onComplete(@NonNull Task task) {

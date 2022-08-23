@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/back.xml" value="0.123" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/buttongradient.xml" value="0.123" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/eg_bg.xml" value="0.126" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/et_bg.xml" value="0.126" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/spinner_arrow.xml" value="0.123" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_add_diseases.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_add_labs.xml" value="0.21197916666666666" />
@@ -22,6 +24,7 @@
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_splash_screen.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_view_labs.xml" value="0.21197916666666666" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_about.xml" value="0.2" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_calculate_bmi.xml" value="0.2" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_contact.xml" value="0.2" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_home.xml" value="0.21197916666666666" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_medical_profile.xml" value="0.25" />

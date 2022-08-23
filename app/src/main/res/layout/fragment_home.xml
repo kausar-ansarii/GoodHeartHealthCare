@@ -136,6 +136,7 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/calculateBmiImg"
                             android:layout_width="90dp"
                             android:layout_height="90dp"
                             android:src="@drawable/calculate_index"/>
