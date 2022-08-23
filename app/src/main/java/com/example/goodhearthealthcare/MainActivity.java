@@ -204,4 +204,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void setDrawer_Locked(){
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void setDrawer_UnLocked(){
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
 }

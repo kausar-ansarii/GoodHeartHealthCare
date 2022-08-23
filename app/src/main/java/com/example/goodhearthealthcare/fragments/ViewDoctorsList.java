@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.goodhearthealthcare.MainActivity;
@@ -50,6 +51,9 @@ public class ViewDoctorsList extends Fragment {
         doctorsList = FirebaseDatabase.getInstance().getReference();
 
         currUserId = mAuth.getCurrentUser().getUid();
+
+        ((MainActivity) getActivity()).getSupportActionBar().hide();
+        ((MainActivity) getActivity()).setDrawer_Locked();
 
         startListen();
 
