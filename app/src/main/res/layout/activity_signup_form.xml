@@ -98,7 +98,8 @@
                         android:layout_height="wrap_content"
                         android:editable="false"
                         android:hint="DOB here"
-                        android:inputType="none" />
+                        android:inputType="none"
+                        />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,7 +138,8 @@
                         android:layout_height="wrap_content"
                         android:editable="false"
                         android:hint="Patient Age here"
-                        android:inputType="none" />
+                        android:inputType="number"
+                        android:maxLength="3"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
