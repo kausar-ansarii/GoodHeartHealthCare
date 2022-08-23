@@ -51,6 +51,7 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/viewDoctorImg"
                             android:layout_width="90dp"
                             android:layout_height="90dp"
                             android:src="@drawable/doctor"/>
@@ -77,6 +78,7 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/viewLabsImg"
                             android:layout_width="90dp"
                             android:layout_height="90dp"
                             android:src="@drawable/lab"/>

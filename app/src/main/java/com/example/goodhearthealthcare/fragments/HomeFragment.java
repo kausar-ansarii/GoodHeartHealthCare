@@ -14,12 +14,30 @@ import com.example.goodhearthealthcare.R;
 
 public class HomeFragment extends Fragment {
 
-    ImageView calculateBmiImg;
+    ImageView calculateBmiImg, viewDoctorImg, viewLabsImg;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+
+        viewDoctorImg = view.findViewById(R.id.viewDoctorImg);
+        viewDoctorImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewDoctorsList viewDoctorsList = new ViewDoctorsList();
+                replaceFragment(viewDoctorsList,"fragmentB");
+            }
+        });
+
+        viewLabsImg = view.findViewById(R.id.viewLabsImg);
+        viewLabsImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewLabsList viewLabsList = new ViewLabsList();
+                replaceFragment(viewLabsList,"fragmentB");
+            }
+        });
 
         calculateBmiImg = view.findViewById(R.id.calculateBmiImg);
         calculateBmiImg.setOnClickListener(new View.OnClickListener() {
