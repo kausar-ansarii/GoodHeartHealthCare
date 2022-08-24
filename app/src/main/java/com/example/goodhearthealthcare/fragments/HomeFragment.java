@@ -16,10 +16,25 @@ public class HomeFragment extends Fragment {
 
     ImageView calculateBmiImg, viewDoctorImg, viewLabsImg;
 
+    //VARIABLES FOR APPOINTMENT
+    ImageView viewAppliedAptImg, viewConfirmedAptImg, viewRejectedAptImg;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+
+        viewAppliedAptImg = view.findViewById(R.id.viewAppliedAptImg);
+        viewAppliedAptImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewAppliedAppointment viewAppliedAppointment = new ViewAppliedAppointment();
+                replaceFragment(viewAppliedAppointment,"fragmentB");
+            }
+        });
+
+        viewConfirmedAptImg = view.findViewById(R.id.viewConfirmedAptImg);
+        viewRejectedAptImg = view.findViewById(R.id.viewRejectedAptImg);
 
         viewDoctorImg = view.findViewById(R.id.viewDoctorImg);
         viewDoctorImg.setOnClickListener(new View.OnClickListener() {

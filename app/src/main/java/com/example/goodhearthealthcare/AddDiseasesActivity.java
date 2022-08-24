@@ -64,6 +64,5 @@ public class AddDiseasesActivity extends AppCompatActivity {
         }
     }
 
-    public void onRadioButtonAllergiesClicked(View view) {
-    }
+    public void onRadioButtonAllergiesClicked(View view) {}
 }

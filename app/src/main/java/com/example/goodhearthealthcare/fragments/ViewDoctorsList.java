@@ -86,11 +86,17 @@ public class ViewDoctorsList extends Fragment {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String hospID = model.getHospitalID();
+                        String sPhone = model.getStaffPhone();
                         /*Intent intent = new Intent(ViewDoctorsList.this, PatientDoctorsProfile.class);
                         intent.putExtra("hospID",hospID);
                         intent.putExtra("doctorID",model.getStaffPhone());
                         startActivity(intent);*/
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("staffPhone", sPhone);
+                        DoctorsProfileView profileView = new DoctorsProfileView();
+                        profileView.setArguments(bundle);
+                        ((MainActivity) getActivity()).replaceFragment(profileView,"fragmentC");
                     }
                 });
                 loadingBar.dismiss();

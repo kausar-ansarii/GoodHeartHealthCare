@@ -21,9 +21,10 @@
             android:layout_marginTop="20dp"/>
 
         <TextView
+            android:id="@+id/userId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID - SHITRI9049"
+            android:text="ID - ##########"
             android:textSize="16sp"
             android:gravity="center"
             android:textStyle="bold"
@@ -38,20 +39,21 @@
             android:layout_marginTop="5dp">
 
             <TextView
+                android:id="@+id/userAge"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="21 years"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/nunito_sans"
                 android:gravity="end"
                 android:layout_marginEnd="5dp"/>
+
             <TextView
+                android:id="@+id/userGender"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Male"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/nunito_sans"
@@ -60,10 +62,10 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/userPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/phone"
-            android:text="+91-9049927365"
             android:gravity="center_vertical"
             android:textSize="18sp"
             android:drawablePadding="8dp"
@@ -72,10 +74,10 @@
             android:fontFamily="@font/nunito_sans" />
 
         <TextView
+            android:id="@+id/userAltPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/phone"
-            android:text="+91-9970530527"
             android:gravity="center_vertical"
             android:textSize="18sp"
             android:drawablePadding="8dp"
@@ -84,15 +86,51 @@
             android:fontFamily="@font/nunito_sans" />
 
         <TextView
+            android:id="@+id/userEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/email"
-            android:text="satyamtiwari442@gmail.com"
             android:gravity="center_vertical"
             android:textSize="20sp"
             android:drawablePadding="8dp"
             android:textColor="@color/black"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/nunito_sans" />
+
+        <TextView
+            android:id="@+id/userAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/location"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:drawablePadding="8dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/nunito_sans" />
+
+        <TextView
+            android:id="@+id/userDOB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/calender_profile"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:drawablePadding="8dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/nunito_sans" />
+
+        <TextView
+            android:id="@+id/userMaritalStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/marital"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:drawablePadding="8dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/nunito_sans" />
 
     </LinearLayout>

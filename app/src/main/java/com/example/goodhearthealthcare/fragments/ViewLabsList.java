@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.goodhearthealthcare.MainActivity;
 import com.example.goodhearthealthcare.R;
 import com.example.goodhearthealthcare.modal.Labs;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -71,9 +72,26 @@ public class ViewLabsList extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String labID = model.getLabID();
+                        String labName = model.getLabName();
+                        String labPhone = model.getLabPhone();
+                        String labEmail = model.getLabEmail();
+                        String labAdd = model.getLabAddress();
+                        String labTo = model.getToTime();
+                        String labFrom = model.getFromTime();
                         /*Intent intent = new Intent(AdminViewLabsActivity.this,ViewHospitalProfileActivity.class);
                         intent.putExtra("labID",labID);
                         startActivity(intent);*/
+                        Bundle bundle = new Bundle();
+                        bundle.putString("labID", labID);
+                        bundle.putString("labName", labName);
+                        bundle.putString("labPhone", labPhone);
+                        bundle.putString("labEmail", labEmail);
+                        bundle.putString("labAdd", labAdd);
+                        bundle.putString("labTo", labTo);
+                        bundle.putString("labFrom", labFrom);
+                        ViewLabProfile profileView = new ViewLabProfile();
+                        profileView.setArguments(bundle);
+                        ((MainActivity) getActivity()).replaceFragment(profileView,"fragmentC");
                     }
                 });
                 loadingBar.dismiss();
