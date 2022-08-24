@@ -48,15 +48,17 @@ public class LoginReceptionist extends AppCompatActivity {
         String passwordString = Password.getEditText().getText().toString().trim();
 
         if (userIdString.isEmpty() || passwordString.isEmpty()) {
-            Toast.makeText(this, "Field's are empty", Toast.LENGTH_SHORT).show();
-        } else {
+            Toast.makeText(this, " User ID and Password cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
             if (userIdString.equals("GoodHealth") && passwordString.equals("GoodPassword")) {
                 Intent intent = new Intent(LoginReceptionist.this, ReceptionistDashboard.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(this, "Error Credentials! Credentials are incorrect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Incorrect Credentials", Toast.LENGTH_SHORT).show();
             }
 
         }

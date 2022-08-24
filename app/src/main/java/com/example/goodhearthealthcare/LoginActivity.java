@@ -3,6 +3,7 @@ package com.example.goodhearthealthcare;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,16 +39,23 @@ public class LoginActivity extends AppCompatActivity {
         emailTextField = findViewById(R.id.emailTextField);
         passTextField = findViewById(R.id.passTextField);
 
+
         loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = emailTextField.getEditText().getText().toString();
-                String pass = passTextField.getEditText().getText().toString();
+                String email = emailTextField.getEditText().getText().toString().trim();
+                String pass = passTextField.getEditText().getText().toString().trim();
 
-                if (email.isEmpty() && pass.isEmpty()){
-                    Toast.makeText(LoginActivity.this, "Field's are empty!", Toast.LENGTH_SHORT).show();
-                } else {
+                if (email.isEmpty() || pass.isEmpty())
+                {
+                    Toast.makeText(LoginActivity.this, "Email or Password cannot be Empty!", Toast.LENGTH_SHORT).show();
+                }
+                else  if (!email.contains("@gmail.com")){
+                    Toast.makeText(LoginActivity.this, "Email is badly formatted", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
                     loadingBar.setTitle("please wait...");
                     loadingBar.setMessage("authentication process going on");
                     loadingBar.setCanceledOnTouchOutside(false);
@@ -61,6 +69,12 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                                 loadingBar.dismiss();
+                            }
+                            if (!task.isSuccessful()){
+                                loadingBar.dismiss();
+                                Log.e("Signup Error", "onCancelled", task.getException());
+                                Toast.makeText(LoginActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+
                             }
                         }
                     });

@@ -82,6 +82,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:gravity="center"
+            android:backgroundTint="@color/mainColor"
             android:text="Verify OTP" />
     </LinearLayout>
 </LinearLayout>
