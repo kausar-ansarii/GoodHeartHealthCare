@@ -1,6 +1,9 @@
 package com.example.goodhearthealthcare.fragments;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,14 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.goodhearthealthcare.R;
 import com.example.goodhearthealthcare.receptionist.AddStaffActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -34,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 public class ViewLabProfile extends Fragment {
@@ -43,9 +51,10 @@ public class ViewLabProfile extends Fragment {
     TextView bookLabTxt, knowTheTestsCost, selectDateText, selectTimeText;
     LinearLayout labBookLayout;
     TextInputLayout patientNameLay, patientPhoneLay, patientAddressLay, bookingLabForLay;
+    Button appointmentBtn;
     EditText selectAppointmentDate, selectAppointmentTime;
     FirebaseAuth mAuth;
-    DatabaseReference patientRef;
+    DatabaseReference patientRef, labTestRef;
     Spinner bookingLabForSpinner;
 
     int fromHour, fromMinute;
@@ -53,15 +62,19 @@ public class ViewLabProfile extends Fragment {
     DateTimeFormatter dtf;
     LocalDateTime now;
     String saveCurrentDate, saveCurrentTime;
+    ProgressDialog loadingBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_lab_profile, container, false);
 
+        loadingBar = new ProgressDialog(getActivity());
+
         mAuth = FirebaseAuth.getInstance();
         currUserID = mAuth.getCurrentUser().getUid();
         patientRef = FirebaseDatabase.getInstance().getReference().child("Patients").child(currUserID);
+        labTestRef = FirebaseDatabase.getInstance().getReference().child("LabTestReq");
 
         Calendar callForDate = Calendar.getInstance();
         final SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
@@ -118,17 +131,64 @@ public class ViewLabProfile extends Fragment {
             }
         });
 
+        labBookLayout = view.findViewById(R.id.labBookLayout);
+
         patientNameLay = view.findViewById(R.id.patientNameLay);
         patientPhoneLay = view.findViewById(R.id.patientPhoneLay);
         patientAddressLay = view.findViewById(R.id.patientAddressLay);
         bookingLabForLay = view.findViewById(R.id.bookingLabForLay);
-
+        appointmentBtn = view.findViewById(R.id.appointmentBtn);
         bookingLabForSpinner = view.findViewById(R.id.bookingLabForSpinner);
 
         selectAppointmentDate = view.findViewById(R.id.selectAppointmentDate);
         selectAppointmentTime = view.findViewById(R.id.selectAppointmentTime);
 
-        labBookLayout = view.findViewById(R.id.labBookLayout);
+        appointmentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = patientNameLay.getEditText().getText().toString();
+                String phone = patientPhoneLay.getEditText().getText().toString();
+                String address = patientAddressLay.getEditText().getText().toString();
+                String testName = bookingLabForLay.getEditText().getText().toString();
+                String testDate = selectAppointmentDate.getText().toString();
+                String testTime = selectAppointmentTime.getText().toString();
+                String labTestID = currUserID + "-" + saveCurrentDate + "-" + saveCurrentTime;
+                if (name.isEmpty() || phone.isEmpty() || address.isEmpty()){
+                    Toast.makeText(getActivity(), "Name or Phone or Address are empty", Toast.LENGTH_SHORT).show();
+                } else if (testDate.isEmpty() || testTime.isEmpty()){
+                    Toast.makeText(getActivity(), "Select time and date", Toast.LENGTH_SHORT).show();
+                } else if (testName.isEmpty()){
+                    Toast.makeText(getActivity(), "Select test", Toast.LENGTH_SHORT).show();
+                } else {
+                    loadingBar.setMessage("processing...");
+                    loadingBar.setCanceledOnTouchOutside(false);
+                    loadingBar.show();
+                    HashMap labMap = new HashMap();
+                    labMap.put("PatientName",name);
+                    labMap.put("PatientPhone",phone);
+                    labMap.put("PatientAddress",address);
+                    labMap.put("TestName",testName);
+                    labMap.put("TestDate",testDate);
+                    labMap.put("TestTime",testTime);
+                    labMap.put("PatientID",currUserID);
+                    labMap.put("LabTestID",labTestID);
+                    labMap.put("TestStatus","Booked");
+                    labTestRef.child(labTestID).updateChildren(labMap).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()){
+                                Alert("Request for lab test is submitted successfully. Will update you once your Lab test get approval!");
+                            } else {
+                                String msg = task.getException().getMessage();
+                                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                            }
+                            loadingBar.dismiss();
+                        }
+                    });
+                    patientRef.child("LabTestRequest").child(labTestID).updateChildren(labMap);
+                }
+            }
+        });
 
         patientRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -214,5 +274,22 @@ public class ViewLabProfile extends Fragment {
         public void onNothingSelected(AdapterView<?> adapterView) {
 
         }
+    }
+
+    private void Alert(String msg) {
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle("Acknowledge")
+                .setMessage(msg)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        /*Intent intent = new Intent(getApplicationContext(), StudentLogin.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);*/
+                    }
+                })
+                .create();
+        dialog.show();
     }
 }
