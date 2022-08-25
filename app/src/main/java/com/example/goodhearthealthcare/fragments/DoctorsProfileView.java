@@ -76,7 +76,7 @@ public class DoctorsProfileView extends Fragment {
         //hospIDStr = getIntent().getExtras().get("hospID").toString();
         doctorIDStr = this.getArguments().getString("staffPhone");
         patientRef = FirebaseDatabase.getInstance().getReference().child("Patients");
-        doctorsRef = FirebaseDatabase.getInstance().getReference().child("Staffs").child("Doctor");
+        doctorsRef = FirebaseDatabase.getInstance().getReference();
 
         appointmentLayout = view.findViewById(R.id.appointmentLayout);
         doctorName = view.findViewById(R.id.doctorName);
@@ -147,7 +147,7 @@ public class DoctorsProfileView extends Fragment {
         appointmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference doctorsAppRef = doctorsRef.child(doctorIDStr).child("AppointmentRequest");
+                DatabaseReference doctorsAppRef = doctorsRef.child("AppointmentRequest");
                 String patientName = patientNameLay.getEditText().getText().toString();
                 String patientPhone = patientPhoneLay.getEditText().getText().toString();
                 String patientAddress = patientAddressLay.getEditText().getText().toString();
@@ -199,9 +199,11 @@ public class DoctorsProfileView extends Fragment {
                     String pt_fName = snapshot.child("fName").getValue().toString();
                     String pt_lName = snapshot.child("lName").getValue().toString();
                     String pt_phone = snapshot.child("Phone").getValue().toString();
+                    String pt_address = snapshot.child("Address").getValue().toString();
                     String name = pt_fName + " " + pt_lName;
                     patientNameLay.getEditText().setText(name);
                     patientPhoneLay.getEditText().setText(pt_phone);
+                    patientAddressLay.getEditText().setText(pt_address);
                 }
             }
 
@@ -210,7 +212,7 @@ public class DoctorsProfileView extends Fragment {
             }
         });
 
-        doctorsRef.child(doctorIDStr).addValueEventListener(new ValueEventListener() {
+        doctorsRef.child("Staffs").child("Doctor").child(doctorIDStr).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -228,7 +230,6 @@ public class DoctorsProfileView extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
         return view;
     }
 
@@ -248,5 +249,4 @@ public class DoctorsProfileView extends Fragment {
                 .create();
         dialog.show();
     }
-
 }

@@ -50,11 +50,12 @@
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/nunito_sans" />
+
                 <TextView
+                    android:id="@+id/patientMediAge"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="21 Years"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/nunito_sans" />
@@ -73,11 +74,12 @@
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/nunito_sans" />
+
                 <TextView
+                    android:id="@+id/patientMediDiabetes"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="No"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/nunito_sans" />
@@ -97,10 +99,10 @@
                     android:textColor="@color/black"
                     android:fontFamily="@font/nunito_sans" />
                 <TextView
+                    android:id="@+id/patientMediThyroid"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="No"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/nunito_sans" />
@@ -120,10 +122,10 @@
                     android:textColor="@color/black"
                     android:fontFamily="@font/nunito_sans" />
                 <TextView
+                    android:id="@+id/patientMediAllergies"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="No"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/nunito_sans" />

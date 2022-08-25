@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ViewAppliedAppointment">
+    tools:context=".fragments.ViewConfirmedAppointment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/viewAppointmentRequest"
+        android:id="@+id/viewAppointmentConfirmed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/noAppointmentAppliedTxt"
+        android:id="@+id/noAppointmentConfirmTxt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -29,4 +29,5 @@
         android:textSize="20sp"
         android:visibility="gone"
         android:fontFamily="@font/nunito_sans"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,7 +34,22 @@ public class HomeFragment extends Fragment {
         });
 
         viewConfirmedAptImg = view.findViewById(R.id.viewConfirmedAptImg);
+        viewConfirmedAptImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewConfirmedAppointment confirmedAppointment = new ViewConfirmedAppointment();
+                replaceFragment(confirmedAppointment,"fragmentB");
+            }
+        });
+
         viewRejectedAptImg = view.findViewById(R.id.viewRejectedAptImg);
+        viewRejectedAptImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewAppointmentRejected rejected = new ViewAppointmentRejected();
+                replaceFragment(rejected,"fragmentB");
+            }
+        });
 
         viewDoctorImg = view.findViewById(R.id.viewDoctorImg);
         viewDoctorImg.setOnClickListener(new View.OnClickListener() {

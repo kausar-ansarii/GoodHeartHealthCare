@@ -35,4 +35,14 @@ public class ReceptionistDashboard extends AppCompatActivity {
         Intent intent = new Intent(this, ViewStaffsActivity.class);
         startActivity(intent);
     }
+
+    public void viewAppointments(View view) {
+        Intent intent = new Intent(this, ViewAppointmentReqs.class);
+        startActivity(intent);
+    }
+
+    public void viewLabRequests(View view) {
+        Intent intent = new Intent(this, ViewLabRequests.class);
+        startActivity(intent);
+    }
 }

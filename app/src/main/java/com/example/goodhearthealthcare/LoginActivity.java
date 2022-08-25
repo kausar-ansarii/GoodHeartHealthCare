@@ -69,12 +69,10 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                                 loadingBar.dismiss();
-                            }
-                            if (!task.isSuccessful()){
+                            } else {
+                                String msg = task.getException().getMessage();
+                                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_LONG).show();
                                 loadingBar.dismiss();
-                                Log.e("Signup Error", "onCancelled", task.getException());
-                                Toast.makeText(LoginActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-
                             }
                         }
                     });

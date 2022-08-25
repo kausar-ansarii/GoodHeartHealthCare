@@ -36,4 +36,14 @@
         <item>Surgeon</item>
     </string-array>
 
+    <string-array name="labTests">
+        <item>CBC</item>
+        <item>BMP</item>
+        <item>CMP</item>
+        <item>Blood Enzyme Test</item>
+        <item>Lipid Panel</item>
+        <item>HbA1C</item>
+        <item>TSH</item>
+    </string-array>
+
 </resources>

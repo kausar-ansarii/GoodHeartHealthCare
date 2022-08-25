@@ -34,8 +34,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ReceptionistUserID"
-            style="@style/LoginTextInputLayoutStyle"
-            android:theme="@style/LoginTextInputLayoutStyle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/mtrl_textinput_default_box_stroke_color"

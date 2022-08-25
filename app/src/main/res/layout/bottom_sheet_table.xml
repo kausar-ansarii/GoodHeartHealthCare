@@ -12,15 +12,16 @@
         android:layout_margin="40dp">
 
         <TableRow
-            android:background="@color/purple_500">
+            android:background="@color/mainColor">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/purple_700"
+                android:textColor="@color/white"
                 android:textSize="17sp"
                 android:padding="8sp"
+                android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:text="Blood Test"/>
 
@@ -28,15 +29,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/purple_700"
+                android:textColor="@color/white"
                 android:textSize="17sp"
                 android:padding="8sp"
+                android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:text="Prices"/>
         </TableRow>
 
         <TableRow
-            android:background="@color/purple_200">
+            android:background="@color/mainColorLight">
 
             <TextView
                 android:layout_width="0dp"
@@ -60,7 +62,7 @@
         </TableRow>
 
         <TableRow
-            android:background="@color/purple_200">
+            android:background="@color/mainColorLight">
 
             <TextView
                 android:layout_width="0dp"
@@ -84,7 +86,7 @@
         </TableRow>
 
         <TableRow
-            android:background="@color/purple_200">
+            android:background="@color/mainColorLight">
 
             <TextView
                 android:layout_width="0dp"
@@ -108,7 +110,7 @@
         </TableRow>
 
         <TableRow
-            android:background="@color/purple_200">
+            android:background="@color/mainColorLight">
 
             <TextView
                 android:layout_width="0dp"
@@ -133,7 +135,7 @@
         </TableRow>
 
         <TableRow
-            android:background="@color/purple_200">
+            android:background="@color/mainColorLight">
 
             <TextView
                 android:layout_width="0dp"
@@ -157,7 +159,7 @@
         </TableRow>
 
         <TableRow
-            android:background="@color/purple_200">
+            android:background="@color/mainColorLight">
 
             <TextView
                 android:layout_width="0dp"
@@ -181,7 +183,7 @@
         </TableRow>
 
         <TableRow
-            android:background="@color/purple_200">
+            android:background="@color/mainColorLight">
 
             <TextView
                 android:layout_width="0dp"
