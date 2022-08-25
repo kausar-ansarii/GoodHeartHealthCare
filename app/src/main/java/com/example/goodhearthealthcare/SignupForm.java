@@ -195,8 +195,8 @@ public class SignupForm extends AppCompatActivity {
                     Toast.makeText(SignupForm.this, "Field's are empty", Toast.LENGTH_SHORT).show();
                 } else {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-                    loadingBar.setTitle("please wait...");
-                    loadingBar.setMessage("account creation is in progress don't press back button");
+                    loadingBar.setTitle("Please wait...");
+                    loadingBar.setMessage("Creating Account");
                     loadingBar.setCanceledOnTouchOutside(false);
                     loadingBar.show();
                     userID = mAuth.getCurrentUser().getUid();
@@ -230,8 +230,8 @@ public class SignupForm extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             } else {
-                                String msg = task.getException().getMessage();
-                                Toast.makeText(SignupForm.this, msg, Toast.LENGTH_LONG).show();
+
+                                Toast.makeText(SignupForm.this, "Something went wrong", Toast.LENGTH_LONG).show();
                             }
                             loadingBar.dismiss();
                         }

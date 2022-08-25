@@ -98,7 +98,8 @@
                 android:gravity="center"
                 android:textAllCaps="true"
                 android:textSize="18sp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:background="@color/mainColor"
                 android:fontFamily="@font/nunito_sans"
                 android:textStyle="bold"/>
 

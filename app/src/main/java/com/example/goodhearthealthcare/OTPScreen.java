@@ -93,8 +93,8 @@ public class OTPScreen extends AppCompatActivity {
     }
 
     private void initiateOTP() {
-        dialog.setTitle("please wait...");
-        dialog.setMessage("OTP has been initialized. Please wait for auto detect.");
+        dialog.setTitle("Please wait...");
+        dialog.setMessage("Sending OTP. Please wait while we auto detect.");
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
         PhoneAuthOptions options =
@@ -216,8 +216,28 @@ public class OTPScreen extends AppCompatActivity {
                         }
                     });*/
                     // Update UI
-                } else {
-                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                } else
+                {
+                    dialog.setTitle("Please wait...");
+                    dialog.setMessage("Verifying...");
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                    String msg = task.getException().getMessage();
+                if(msg.equals("The sms code has expired. Please re-send the verification code to try again.")){
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Code Expired", Toast.LENGTH_LONG).show();
+
+                }
+                else if(msg.equals("The sms verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure use the verification code provided by the user.")){
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(),"Invalid Code",Toast.LENGTH_LONG).show();
+
+                }
+                else{
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_LONG).show();
+                }
+
                 }
             }
         });

@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    loadingBar.setTitle("please wait...");
-                    loadingBar.setMessage("authentication process going on");
+                    loadingBar.setTitle("Please wait...");
+                    loadingBar.setMessage("Logging in");
                     loadingBar.setCanceledOnTouchOutside(false);
                     loadingBar.show();
                     mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -69,10 +69,24 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                                 loadingBar.dismiss();
-                            } else {
+                            }
+                            else {
                                 String msg = task.getException().getMessage();
-                                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_LONG).show();
-                                loadingBar.dismiss();
+                                if (msg.equals("There is no user record corresponding to this identifier. The user may have been deleted.")){
+                                    Toast.makeText(LoginActivity.this, "No user Found", Toast.LENGTH_LONG).show();
+                                    loadingBar.dismiss();
+                                }
+                                else if (msg.equals("The password is invalid or the user does not have a password.")){
+                                        Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
+                                        loadingBar.dismiss();
+
+                                }
+
+                                else {
+                                    Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                                    loadingBar.dismiss();
+                                }
+
                             }
                         }
                     });

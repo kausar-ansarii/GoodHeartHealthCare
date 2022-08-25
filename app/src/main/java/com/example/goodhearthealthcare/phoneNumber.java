@@ -44,9 +44,15 @@ public class phoneNumber extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String num = phoneTextField.getEditText().getText().toString();
+                int len = num.length();
                 if (num.isEmpty()){
-                    Toast.makeText(phoneNumber.this, "Field's are empty", Toast.LENGTH_SHORT).show();
-                } else {
+                    Toast.makeText(phoneNumber.this, "Please provide phone number", Toast.LENGTH_SHORT).show();
+                }
+                else if (len!=10){
+                    Toast.makeText(phoneNumber.this, "Phone number must contain exact 10 digits ", Toast.LENGTH_SHORT).show();
+                }
+
+                else {
                     Intent intent = new Intent(phoneNumber.this, OTPScreen.class);
                     intent.putExtra("phone",num);
                     /*intent.putExtra("email",email);
