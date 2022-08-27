@@ -13,6 +13,74 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Medicine Reminder"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/countdownImg"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/countdown" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Dapaglifozin"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+                        android:id="@+id/medicineOneTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
@@ -23,8 +91,7 @@
             android:fontFamily="@font/nunito_sans"
             android:text="What are you looking for?"
             android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -196,8 +263,7 @@
             android:fontFamily="@font/nunito_sans"
             android:text="Manage Appointments"
             android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -294,11 +360,8 @@
                             android:textColor="@color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -311,8 +374,7 @@
             android:fontFamily="@font/nunito_sans"
             android:text="Manage Lab Test's"
             android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

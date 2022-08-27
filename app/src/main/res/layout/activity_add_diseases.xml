@@ -68,7 +68,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintAnimationEnabled="true"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -101,6 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Since(yrs)"
+                    android:text="NA"
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -119,6 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Before food"
+                    android:text="NA"
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -137,6 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="After food"
+                    android:text="NA"
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -189,7 +193,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintAnimationEnabled="true"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -222,6 +227,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Since(yrs)"
+                    android:text="NA"
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -241,6 +247,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="For what"
+                    android:text="NA"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -293,7 +300,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintAnimationEnabled="true"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -326,6 +334,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Since(yrs)"
+                    android:text="NA"
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -345,7 +354,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Of what"
-                    android:inputType="numberDecimal" />
+                    android:text="NA"
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -396,7 +406,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintAnimationEnabled="true"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -428,6 +439,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Since(yrs)"
+                    android:text="NA"
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -446,6 +458,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Count"
+                    android:text="NA"
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>

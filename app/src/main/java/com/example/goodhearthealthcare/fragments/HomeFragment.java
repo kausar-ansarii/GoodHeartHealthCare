@@ -1,16 +1,23 @@
 package com.example.goodhearthealthcare.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.goodhearthealthcare.R;
+import com.example.goodhearthealthcare.services.BroadcastService;
+
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
 
@@ -19,10 +26,19 @@ public class HomeFragment extends Fragment {
     //VARIABLES FOR APPOINTMENT
     ImageView viewAppliedAptImg, viewConfirmedAptImg, viewRejectedAptImg;
 
+    TextView medicineOneTimer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+
+        medicineOneTimer = view.findViewById(R.id.medicineOneTimer);
+
+        //INITIALIZE THE TIME
+        long duration = TimeUnit.HOURS.toMillis(1);
+
+        initializeTimeCounter(duration);
 
         viewAppliedAptImg = view.findViewById(R.id.viewAppliedAptImg);
         viewAppliedAptImg.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +96,28 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void initializeTimeCounter(long duration) {
+        new CountDownTimer(duration, 1000) {
+            @Override
+            public void onTick(long l) {
+                String sDur = String.format(Locale.ENGLISH,"%d : %02d : %02d"
+                        , TimeUnit.MILLISECONDS.toHours(l)
+                        , TimeUnit.MILLISECONDS.toMinutes(l)
+                        , TimeUnit.MILLISECONDS.toSeconds(l) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(l)));
+
+                medicineOneTimer.setText(sDur);
+            }
+
+            @Override
+            public void onFinish() {
+                // THIS IS THE EXAMPLE OF RECURRENCE RELATION OR RECURRENCE FUNCTION which means
+                // Function is calling itself again and again and it will work infinity times or when the user dies
+                initializeTimeCounter(duration);
+            }
+        }.start();
     }
 
     public void replaceFragment(Fragment fragment, String tag) {
