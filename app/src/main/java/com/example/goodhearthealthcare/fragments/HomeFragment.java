@@ -5,40 +5,79 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.goodhearthealthcare.R;
+import com.example.goodhearthealthcare.adapter.Medicine;
+import com.example.goodhearthealthcare.modal.AddMedicine;
 import com.example.goodhearthealthcare.services.BroadcastService;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
 
     ImageView calculateBmiImg, viewDoctorImg, viewLabsImg;
+    RelativeLayout addMedicineBtn, submitMedicineBtn;
+    LinearLayout layout_list;
+    MaterialCardView submitMedicineListCard;
 
     //VARIABLES FOR APPOINTMENT
     ImageView viewAppliedAptImg, viewConfirmedAptImg, viewRejectedAptImg;
 
     TextView medicineOneTimer;
+    RecyclerView viewMedicineForReminder;
+
+    ArrayList<AddMedicine> medList = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
-        medicineOneTimer = view.findViewById(R.id.medicineOneTimer);
+        viewMedicineForReminder = view.findViewById(R.id.viewMedicineForReminder);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
+        viewMedicineForReminder.setLayoutManager(layoutManager);
+        viewMedicineForReminder.setAdapter(new Medicine(medList));
+
+        submitMedicineListCard = view.findViewById(R.id.submitMedicineListCard);
+
+        layout_list = view.findViewById(R.id.layout_list);
+        submitMedicineBtn = view.findViewById(R.id.submitMedicineBtn);
+        submitMedicineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkIfValidAndRead()){}
+            }
+        });
+
+        addMedicineBtn = view.findViewById(R.id.addMedicineBtn);
+        addMedicineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addView();
+                submitMedicineListCard.setVisibility(View.VISIBLE);
+            }
+        });
 
         //INITIALIZE THE TIME
-        long duration = TimeUnit.HOURS.toMillis(1);
+        //long duration = TimeUnit.HOURS.toMillis(1);
 
-        initializeTimeCounter(duration);
+        //initializeTimeCounter(duration);
 
         viewAppliedAptImg = view.findViewById(R.id.viewAppliedAptImg);
         viewAppliedAptImg.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +137,55 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void initializeTimeCounter(long duration) {
+    private boolean checkIfValidAndRead() {
+        medList.clear();
+        boolean result = true;
+
+        for (int i = 0; i<layout_list.getChildCount(); i++){
+            View medicineView = layout_list.getChildAt(i);
+            TextInputLayout mName = medicineView.findViewById(R.id.medicineNameLay);
+            TextInputLayout mTime = medicineView.findViewById(R.id.medicineTimeLay);
+
+            String mNameStr = mName.getEditText().getText().toString();
+            String mTimeStr = mTime.getEditText().getText().toString();
+
+            AddMedicine addMedicine = new AddMedicine();
+
+            if (!mNameStr.isEmpty() || !mTimeStr.isEmpty()){
+                addMedicine.setMedName(mNameStr);
+                addMedicine.setMedTime(mTimeStr);
+            } else {
+                result = false;
+                break;
+            }
+
+            medList.add(addMedicine);
+        }
+
+        return result;
+    }
+
+    private void addView() {
+        View medicineView = getLayoutInflater().inflate(R.layout.medicine_add_row,null,false);
+
+        TextInputLayout mName = medicineView.findViewById(R.id.medicineNameLay);
+        TextInputLayout mTime = medicineView.findViewById(R.id.medicineTimeLay);
+        ImageView mLayClose = medicineView.findViewById(R.id.clearMedicineLay);
+        mLayClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeMediView(medicineView);
+            }
+        });
+
+        layout_list.addView(medicineView);
+    }
+
+    private void removeMediView(View v) {
+        layout_list.removeView(v);
+    }
+
+    /*private void initializeTimeCounter(long duration) {
         new CountDownTimer(duration, 1000) {
             @Override
             public void onTick(long l) {
@@ -118,7 +205,7 @@ public class HomeFragment extends Fragment {
                 initializeTimeCounter(duration);
             }
         }.start();
-    }
+    }*/
 
     public void replaceFragment(Fragment fragment, String tag) {
         //Get current fragment placed in container
