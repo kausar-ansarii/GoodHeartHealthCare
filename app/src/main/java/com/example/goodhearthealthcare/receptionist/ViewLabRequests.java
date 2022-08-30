@@ -134,7 +134,7 @@ public class ViewLabRequests extends AppCompatActivity {
                                     labTestReqRef.child("Patients").child(patientID).child("LabTestRequest").child(labTestIDRej).removeValue();
                                     labTestReqRef.child("LabTestReq").child(labTestIDRej).removeValue();
                                     labTestConRef.child("LabTestRejected").child(labTestIDRej).updateChildren(patientMap);
-                                    
+
                                     //appointRejRef.child("Patients").child(patientID).child("AppointmentRejected").child(appointmentIDRej).updateChildren(patientMap);
                                     //appointRejRef.child("Patients").child(patientID).child("AppointmentRequest").child(appointmentIDRej).removeValue();
                                     //appointRejRef.child("AppointmentRequest").child(appointmentIDRej).removeValue();
