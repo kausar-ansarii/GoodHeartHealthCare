@@ -92,7 +92,7 @@ public class ConfirmedLabTest extends AppCompatActivity {
                                 public void onClick(View view) {
                                     CharSequence options[] = new CharSequence[]
                                             {
-                                                    "Booked",
+                                                    "Test Booked",
                                                     "In Progress",
                                                     "Reports Done"
                                             };

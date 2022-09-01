@@ -321,7 +321,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/C:/Users/Son%20of%20lord%20shiva/AppData/Local/Android/Sdk/icons/material/materialicons/done/baseline_done_24.xml" />
+                                      <entry key="url" value="file:/C:/Users/Son%20of%20lord%20shiva/AppData/Local/Android/Sdk/icons/material/materialicons/upload_file/baseline_upload_file_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -332,7 +332,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="717171" />
-                            <entry key="outputName" value="done" />
+                            <entry key="outputName" value="upload_report" />
                             <entry key="sourceFile" value="F:\SATYAM\FlutterProjectLeraning\GoodHeartHealthCare" />
                           </map>
                         </option>
