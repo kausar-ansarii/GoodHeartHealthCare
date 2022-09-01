@@ -3,10 +3,12 @@ package com.example.goodhearthealthcare.receptionist;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.example.goodhearthealthcare.R;
 import com.example.goodhearthealthcare.modal.LabTest;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,12 +31,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class ConfirmedLabTest extends AppCompatActivity {
 
     String userID;
     RecyclerView viewConfirmedLabsTest;
     TextView noConfirmLabTestTxt;
-    DatabaseReference labTestRef;
+    DatabaseReference labTestRef, patientRef;
     ProgressDialog loadingBar;
     FirebaseAuth mAuth;
 
@@ -55,6 +60,7 @@ public class ConfirmedLabTest extends AppCompatActivity {
         viewConfirmedLabsTest.setLayoutManager(linearLayoutManager);
 
         labTestRef = FirebaseDatabase.getInstance().getReference().child("LabTestConfirmed");
+        patientRef = FirebaseDatabase.getInstance().getReference().child("Patients");
         startListen();
     }
 
@@ -85,6 +91,9 @@ public class ConfirmedLabTest extends AppCompatActivity {
                             holder.setTime(model.getTestTime());
                             holder.setTestName(model.getTestName());
                             holder.setTestStatus(model.getTestStatus());
+                            if (model.getTestStatus().toString().equals("Completed")){
+                                holder.itemView.findViewById(R.id.uploadTestReportImg).setVisibility(View.VISIBLE);
+                            }
                             loadingBar.dismiss();
 
                             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +101,7 @@ public class ConfirmedLabTest extends AppCompatActivity {
                                 public void onClick(View view) {
                                     CharSequence options[] = new CharSequence[]
                                             {
-                                                    "Test Booked",
-                                                    "In Progress",
+                                                    "Sample Collected",
                                                     "Reports Done"
                                             };
                                     AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmedLabTest.this);
@@ -102,18 +110,9 @@ public class ConfirmedLabTest extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int i) {
                                             if (i == 0) {
-                                                //String uid = getRef(i).getKey();
-                                                //AddToDatabase(uid);
-                                                //RemoveOrderThroughId(uid);
-                                                Toast.makeText(ConfirmedLabTest.this, "Test Booked", Toast.LENGTH_SHORT).show();
-                                            } else if (i == 1) {
-                                                //String uid = getRef(i).getKey();
-                                                //AddToDatabase(uid);
-                                                //RemoveOrderThroughId(uid);
-                                                Toast.makeText(ConfirmedLabTest.this, "In Progress", Toast.LENGTH_SHORT).show();
+                                                UpdateStatusToSampleCollected(model.getPatientID(),model.getLabTestID());
                                             } else {
-                                                Toast.makeText(ConfirmedLabTest.this, "Reports Done", Toast.LENGTH_SHORT).show();
-                                                finish();
+                                                UpdateStatusToReportsDone(model.getPatientID(),model.getLabTestID());
                                             }
                                         }
                                     });
@@ -144,10 +143,33 @@ public class ConfirmedLabTest extends AppCompatActivity {
         });
     }
 
+    private void UpdateStatusToReportsDone(String patientID, String labTestID) {
+        HashMap map = new HashMap();
+        map.put("TestStatus","Completed");
+        patientRef.child(patientID).child("LabTestConfirmed").child(labTestID).updateChildren(map);
+        labTestRef.child(labTestID).updateChildren(map);
+        Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
+    }
+
+    private void UpdateStatusToSampleCollected(String patientID, String labTestID) {
+        HashMap map = new HashMap();
+        map.put("TestStatus","Collected");
+        patientRef.child(patientID).child("LabTestConfirmed").child(labTestID).updateChildren(map);
+        labTestRef.child(labTestID).updateChildren(map);
+        Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
+    }
+
     public static class viewConfirmedLabsTestViewHolder extends RecyclerView.ViewHolder {
         public viewConfirmedLabsTestViewHolder(@NonNull View itemView) {
             super(itemView);
             //mView = itemView;
+            ImageView uploadTestReportImg = itemView.findViewById(R.id.uploadTestReportImg);
+            uploadTestReportImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(itemView.getContext(), "Upload reports", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         public void setName(String fname) {

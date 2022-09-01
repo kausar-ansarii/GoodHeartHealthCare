@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
 
-    ImageView calculateBmiImg, viewDoctorImg, viewLabsImg;
+    ImageView calculateBmiImg, viewDoctorImg, viewLabsImg, viewAppliedLabImg;
     RelativeLayout addMedicineBtn, submitMedicineBtn;
     LinearLayout layout_list;
     MaterialCardView submitMedicineListCard;
@@ -62,6 +62,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (checkIfValidAndRead()){}
+            }
+        });
+
+        viewAppliedLabImg = view.findViewById(R.id.viewAppliedLabImg);
+        viewAppliedLabImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppliedLabTest appliedLabTest = new AppliedLabTest();
+                replaceFragment(appliedLabTest,"fragmentB");
             }
         });
 

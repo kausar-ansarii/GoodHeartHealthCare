@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".receptionist.ConfirmedLabTest">
+    tools:context=".fragments.AppliedLabTest">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/viewConfirmedLabsTest"
+        android:id="@+id/viewLabTestRequest"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/noConfirmLabTestTxt"
+        android:id="@+id/noLabTestAppliedTxt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -29,5 +29,4 @@
         android:textSize="20sp"
         android:visibility="gone"
         android:fontFamily="@font/nunito_sans"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
