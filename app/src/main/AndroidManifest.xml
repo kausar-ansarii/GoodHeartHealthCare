@@ -14,7 +14,7 @@
         android:theme="@style/Theme.GoodHeartHealthCare"
         tools:targetApi="31">
         <activity
-            android:name=".ConfirmedLabTest"
+            android:name=".receptionist.ConfirmedLabTest"
             android:exported="false" />
         <activity
             android:name=".receptionist.ViewLabRequests"

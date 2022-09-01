@@ -95,14 +95,19 @@ public class ViewLabRequests extends AppCompatActivity {
                                     String time = model.getTestTime();
                                     String patientID = model.getPatientID();
                                     String testID = model.getLabTestID();
+                                    String testName = model.getTestName();
                                     HashMap<String, Object> patientMap = new HashMap<String, Object>();
-                                    patientMap.put("PatientName", name);
-                                    patientMap.put("PatientPhone", phone);
-                                    patientMap.put("PatientID", patientID);
-                                    patientMap.put("PatientAddress", address);
-                                    patientMap.put("AppDate", date);
-                                    patientMap.put("AppTime", time);
-                                    patientMap.put("LabTestID", testID);
+
+                                    patientMap.put("PatientName",name);
+                                    patientMap.put("PatientPhone",phone);
+                                    patientMap.put("PatientAddress",address);
+                                    patientMap.put("TestName",testName);
+                                    patientMap.put("TestDate",date);
+                                    patientMap.put("TestTime",time);
+                                    patientMap.put("PatientID",patientID);
+                                    patientMap.put("LabTestID",testID);
+                                    patientMap.put("TestStatus","Booked");
+
                                     labTestConRef.child("Patients").child(patientID).child("LabTestConfirmed").child(testID).updateChildren(patientMap);
                                     labTestReqRef.child("Patients").child(patientID).child("LabTestRequest").child(testID).removeValue();
                                     labTestReqRef.child("LabTestReq").child(testID).removeValue();
@@ -121,14 +126,17 @@ public class ViewLabRequests extends AppCompatActivity {
                                     String time = model.getTestTime();
                                     String patientID = model.getPatientID();
                                     String labTestIDRej = model.getLabTestID();
+                                    String testName = model.getTestName();
                                     HashMap<String, Object> patientMap = new HashMap<String, Object>();
-                                    patientMap.put("PatientName", name);
-                                    patientMap.put("PatientPhone", phone);
-                                    patientMap.put("PatientID", patientID);
-                                    patientMap.put("PatientAddress", address);
-                                    patientMap.put("AppDate", date);
-                                    patientMap.put("AppTime", time);
-                                    patientMap.put("LabTestID", labTestIDRej);
+                                    patientMap.put("PatientName",name);
+                                    patientMap.put("PatientPhone",phone);
+                                    patientMap.put("PatientAddress",address);
+                                    patientMap.put("TestName",testName);
+                                    patientMap.put("TestDate",date);
+                                    patientMap.put("TestTime",time);
+                                    patientMap.put("PatientID",patientID);
+                                    patientMap.put("LabTestID",labTestIDRej);
+                                    patientMap.put("TestStatus","Booked");
 
                                     labTestConRef.child("Patients").child(patientID).child("LabTestRejected").child(labTestIDRej).updateChildren(patientMap);
                                     labTestReqRef.child("Patients").child(patientID).child("LabTestRequest").child(labTestIDRej).removeValue();

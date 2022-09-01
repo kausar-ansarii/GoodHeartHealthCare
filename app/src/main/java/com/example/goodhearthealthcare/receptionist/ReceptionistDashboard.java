@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.goodhearthealthcare.R;
+import com.example.goodhearthealthcare.fragments.ViewConfirmedAppointment;
 
 public class ReceptionistDashboard extends AppCompatActivity {
 
@@ -43,6 +44,11 @@ public class ReceptionistDashboard extends AppCompatActivity {
 
     public void viewLabRequests(View view) {
         Intent intent = new Intent(this, ViewLabRequests.class);
+        startActivity(intent);
+    }
+
+    public void viewConLabTests(View view) {
+        Intent intent = new Intent(this, ConfirmedLabTest.class);
         startActivity(intent);
     }
 }
