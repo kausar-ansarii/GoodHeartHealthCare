@@ -1,20 +1,31 @@
 package com.example.goodhearthealthcare.receptionist;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +33,7 @@ import com.example.goodhearthealthcare.R;
 import com.example.goodhearthealthcare.modal.LabTest;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.github.barteksc.pdfviewer.PDFView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +53,10 @@ public class ConfirmedLabTest extends AppCompatActivity {
     DatabaseReference labTestRef, patientRef;
     ProgressDialog loadingBar;
     FirebaseAuth mAuth;
+    int PDF_CODE = 1;
+    Uri pdfUri;
+    Dialog uploadReportDialog;
+    PDFView uploadPdfView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +67,7 @@ public class ConfirmedLabTest extends AppCompatActivity {
         //userID = mAuth.getCurrentUser().getUid();
 
         loadingBar = new ProgressDialog(this);
+        uploadReportDialog = new Dialog(this);
 
         noConfirmLabTestTxt = findViewById(R.id.noConfirmLabTestTxt);
         viewConfirmedLabsTest = findViewById(R.id.viewConfirmedLabsTest);
@@ -91,7 +108,7 @@ public class ConfirmedLabTest extends AppCompatActivity {
                             holder.setTime(model.getTestTime());
                             holder.setTestName(model.getTestName());
                             holder.setTestStatus(model.getTestStatus());
-                            if (model.getTestStatus().toString().equals("Completed")){
+                            if (model.getTestStatus().toString().equals("Completed")) {
                                 holder.itemView.findViewById(R.id.uploadTestReportImg).setVisibility(View.VISIBLE);
                             }
                             loadingBar.dismiss();
@@ -110,9 +127,9 @@ public class ConfirmedLabTest extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int i) {
                                             if (i == 0) {
-                                                UpdateStatusToSampleCollected(model.getPatientID(),model.getLabTestID());
+                                                UpdateStatusToSampleCollected(model.getPatientID(), model.getLabTestID());
                                             } else {
-                                                UpdateStatusToReportsDone(model.getPatientID(),model.getLabTestID());
+                                                UpdateStatusToReportsDone(model.getPatientID(), model.getLabTestID());
                                             }
                                         }
                                     });
@@ -145,7 +162,7 @@ public class ConfirmedLabTest extends AppCompatActivity {
 
     private void UpdateStatusToReportsDone(String patientID, String labTestID) {
         HashMap map = new HashMap();
-        map.put("TestStatus","Completed");
+        map.put("TestStatus", "Completed");
         patientRef.child(patientID).child("LabTestConfirmed").child(labTestID).updateChildren(map);
         labTestRef.child(labTestID).updateChildren(map);
         Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
@@ -153,13 +170,13 @@ public class ConfirmedLabTest extends AppCompatActivity {
 
     private void UpdateStatusToSampleCollected(String patientID, String labTestID) {
         HashMap map = new HashMap();
-        map.put("TestStatus","Collected");
+        map.put("TestStatus", "Collected");
         patientRef.child(patientID).child("LabTestConfirmed").child(labTestID).updateChildren(map);
         labTestRef.child(labTestID).updateChildren(map);
         Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
     }
 
-    public static class viewConfirmedLabsTestViewHolder extends RecyclerView.ViewHolder {
+    public class viewConfirmedLabsTestViewHolder extends RecyclerView.ViewHolder {
         public viewConfirmedLabsTestViewHolder(@NonNull View itemView) {
             super(itemView);
             //mView = itemView;
@@ -167,7 +184,27 @@ public class ConfirmedLabTest extends AppCompatActivity {
             uploadTestReportImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(itemView.getContext(), "Upload reports", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(itemView.getContext(), "Upload reports", Toast.LENGTH_SHORT).show();
+                    uploadReportDialog.setContentView(R.layout.upload_report_layout);
+
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(uploadReportDialog.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                    uploadReportDialog.getWindow().setAttributes(lp);
+
+                    TextView selectPdfFile = uploadReportDialog.findViewById(R.id.selectPdfFile);
+                    selectPdfFile.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (ContextCompat.checkSelfPermission(ConfirmedLabTest.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                                SelectFileFromStorage();
+                            } else {
+                                ActivityCompat.requestPermissions(ConfirmedLabTest.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                            }
+                        }
+                    });
+                    uploadReportDialog.show();
                 }
             });
         }
@@ -212,4 +249,52 @@ public class ConfirmedLabTest extends AppCompatActivity {
             Picasso.with(ctx).load(image).into(donorimage);
         }*/
     }
+
+    private void SelectFileFromStorage() {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PDF_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PDF_CODE && resultCode == RESULT_OK && data != null) {
+            pdfUri = data.getData();
+            TextView selectFileName = uploadReportDialog.findViewById(R.id.selectFileName);
+            MaterialCardView uploadPdfFileCard = uploadReportDialog.findViewById(R.id.uploadPdfFileCard);
+            uploadPdfFileCard.setVisibility(View.VISIBLE);
+            uploadPdfView = uploadReportDialog.findViewById(R.id.uploadPdfView);
+
+            selectFileName.setText("You selected:- " + getFileName(pdfUri, getApplicationContext()));
+            //uploadPdfView.fromAsset("client.pdf").load();
+            uploadPdfView.fromUri(pdfUri).load();
+        } else {
+            Toast.makeText(this, "Please select file", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    String getFileName(Uri uri, Context context) {
+        String res = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    res = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+            if (res == null) {
+                res = uri.getPath();
+                int cutt = res.lastIndexOf('/');
+                if (cutt != -1) {
+                    res = res.substring(cutt + 1);
+                }
+            }
+        }
+        return res;
+    }
+
 }

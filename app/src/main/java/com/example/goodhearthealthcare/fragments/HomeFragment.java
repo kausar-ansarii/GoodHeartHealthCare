@@ -1,5 +1,7 @@
 package com.example.goodhearthealthcare.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -11,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +37,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
@@ -49,6 +53,12 @@ public class HomeFragment extends Fragment {
     ArrayList<MedicineReminder> medicineReminder = new ArrayList<>();
     AlertDialog dialog;
 
+    private CountDownTimer mCountDownTimer;
+    private boolean mTimerRunning;
+    private long mStartTimeInMillis;
+    private long mTimeLeftInMillis;
+    private long mEndTime;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -62,13 +72,13 @@ public class HomeFragment extends Fragment {
         submitMedicineListCard = view.findViewById(R.id.submitMedicineListCard);
 
         layout_list = view.findViewById(R.id.layout_list);
-        submitMedicineBtn = view.findViewById(R.id.submitMedicineBtn);
+        /*submitMedicineBtn = view.findViewById(R.id.submitMedicineBtn);
         submitMedicineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (checkIfValidAndRead()){}
             }
-        });
+        });*/
 
         viewAppliedLabImg = view.findViewById(R.id.viewAppliedLabImg);
         viewAppliedLabImg.setOnClickListener(new View.OnClickListener() {
@@ -180,8 +190,11 @@ public class HomeFragment extends Fragment {
         TextView medTimeTxt = view.findViewById(R.id.medicineTime);
         medNameTxt.setText(medName);
         medTimeTxt.setText(medTime);
+        Long hours = Long.valueOf(medTimeTxt.getText().toString());
         layout_list.addView(view);
-        SharedPreferences medData = getActivity().getSharedPreferences("DATA", Context.MODE_PRIVATE);
+        startTimerWithParam(Long.valueOf(medTime));
+        updateCountDownTextWithParam(medTimeTxt,hours);
+        SharedPreferences medData = getActivity().getSharedPreferences("DATA", MODE_PRIVATE);
         SharedPreferences.Editor editor = medData.edit();
         Gson gson = new Gson();
         medicineReminder.add(new MedicineReminder(medName, medTime));
@@ -192,7 +205,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadData() {
-        SharedPreferences medData = getActivity().getSharedPreferences("DATA", Context.MODE_PRIVATE);
+        SharedPreferences medData = getActivity().getSharedPreferences("DATA", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = medData.getString("med_rem_data",null);
         Type type = new TypeToken<ArrayList<MedicineReminder>>(){
@@ -215,7 +228,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private boolean checkIfValidAndRead() {
+    /*private boolean checkIfValidAndRead() {
         medList.clear();
         boolean result = true;
 
@@ -259,7 +272,7 @@ public class HomeFragment extends Fragment {
 
     private void removeMediView(View v) {
         layout_list.removeView(v);
-    }
+    }*/
 
     /*private void initializeTimeCounter(long duration) {
         new CountDownTimer(duration, 1000) {
@@ -282,6 +295,98 @@ public class HomeFragment extends Fragment {
             }
         }.start();
     }*/
+
+    private void startTimerWithParam(Long time) {
+        mEndTime = System.currentTimeMillis() + time;
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                mTimerRunning = false;
+            }
+        }.start();
+        mTimerRunning = true;
+    }
+
+    private void startTimer() {
+        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                mTimerRunning = false;
+            }
+        }.start();
+        mTimerRunning = true;
+    }
+
+    private void updateCountDownText() {
+        int hours = (int) (mTimeLeftInMillis / 1000) / 3600;
+        int minutes = (int) ((mTimeLeftInMillis / 1000) % 3600) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds);
+        //View view = getLayoutInflater().inflate(R.layout.card,null);
+        //EditText timeET = view.findViewById(R.id.medicineTime);
+        //mTextViewCountDown.setText(timeLeftFormatted);
+        //timeET.setText(timeLeftFormatted);
+    }
+
+    private void updateCountDownTextWithParam(TextView medTimeTxt, Long hoursParent) {
+        int hours = (int) (mTimeLeftInMillis / 1000) / 3600;
+        int minutes = (int) ((mTimeLeftInMillis / 1000) % 3600) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%d:%02d:%02d", hoursParent, minutes, seconds);
+        //View view = getLayoutInflater().inflate(R.layout.card,null);
+        //EditText timeET = view.findViewById(R.id.medicineTime);
+        //mTextViewCountDown.setText(timeLeftFormatted);
+        medTimeTxt.setText(timeLeftFormatted);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        SharedPreferences prefs = getActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("startTimeInMillis", mStartTimeInMillis);
+        editor.putLong("millisLeft", mTimeLeftInMillis);
+        editor.putBoolean("timerRunning", mTimerRunning);
+        editor.putLong("endTime", mEndTime);
+        editor.apply();
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        SharedPreferences prefs = getActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+        mTimeLeftInMillis = prefs.getLong("startTimeInMillis", 600000);
+        mTimeLeftInMillis = prefs.getLong("millisLeft", mStartTimeInMillis);
+        mTimerRunning = prefs.getBoolean("timerRunning", false);
+        updateCountDownText();
+        if (mTimerRunning) {
+            mEndTime = prefs.getLong("endTime", 0);
+            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+            if (mTimeLeftInMillis < 0) {
+                mTimeLeftInMillis = 0;
+                mTimerRunning = false;
+                updateCountDownText();
+            } else {
+                startTimer();
+            }
+        }
+    }
 
     public void replaceFragment(Fragment fragment, String tag) {
         //Get current fragment placed in container
