@@ -29,6 +29,7 @@
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_view_appointment_reqs.xml" value="0.19537037037037036" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_view_lab_requests.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/activity_view_labs.xml" value="0.21197916666666666" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/add_med_card.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/all_appointment_req.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/all_appointment_req_patient.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/all_doctors_view.xml" value="0.22552083333333334" />
@@ -48,9 +49,10 @@
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_view_doctors_list.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_view_lab_profile.xml" value="0.25" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_view_labs_list.xml" value="0.21197916666666666" />
-        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/medicine_add_row.xml" value="0.33" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/medicine_add_row.xml" value="0.3806818181818182" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/medicine_view_row.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/nav_header.xml" value="0.22552083333333334" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/view_med_card.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/menu/nav_menu.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/drawable/buttongradient.xml" value="0.1945" />
         <entry key="..\:/Users/User/AndroidStudioProjects/GoodHeartHealthCare/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1945" />

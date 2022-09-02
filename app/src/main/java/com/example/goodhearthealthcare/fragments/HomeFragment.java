@@ -1,32 +1,39 @@
 package com.example.goodhearthealthcare.fragments;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.goodhearthealthcare.MainActivity;
 import com.example.goodhearthealthcare.R;
 import com.example.goodhearthealthcare.adapter.Medicine;
 import com.example.goodhearthealthcare.modal.AddMedicine;
-import com.example.goodhearthealthcare.services.BroadcastService;
+import com.example.goodhearthealthcare.modal.MedicineReminder;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
 
@@ -34,15 +41,13 @@ public class HomeFragment extends Fragment {
     RelativeLayout addMedicineBtn, submitMedicineBtn;
     LinearLayout layout_list;
     MaterialCardView submitMedicineListCard;
-
     //VARIABLES FOR APPOINTMENT
     ImageView viewAppliedAptImg, viewConfirmedAptImg, viewRejectedAptImg;
-
     TextView medicineOneTimer;
     RecyclerView viewMedicineForReminder;
-
     ArrayList<AddMedicine> medList = new ArrayList<>();
-
+    ArrayList<MedicineReminder> medicineReminder = new ArrayList<>();
+    AlertDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,12 +79,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        buildDialog();
+        loadData();
+
         addMedicineBtn = view.findViewById(R.id.addMedicineBtn);
         addMedicineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addView();
-                submitMedicineListCard.setVisibility(View.VISIBLE);
+                //addView();
+                //submitMedicineListCard.setVisibility(View.VISIBLE);
+                /*AddMedicineReminder medicineReminder = new AddMedicineReminder();
+                replaceFragment(medicineReminder,"fragmentB");*/
+                dialog.show();
             }
         });
 
@@ -146,6 +157,64 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private void buildDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.medicine_add_row,null);
+        final TextInputLayout medName = view.findViewById(R.id.medicineNameLay);
+        final TextInputLayout medTime = view.findViewById(R.id.medicineTimeLay);
+        builder.setView(view);
+        builder.setTitle("Enter details:").setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                addCard(medName.getEditText().getText().toString(),medTime.getEditText().getText().toString());
+                medName.getEditText().setText("");
+                medTime.getEditText().setText("");
+            }
+        });
+        dialog = builder.create();
+    }
+
+    private void addCard(String medName, String medTime) {
+        View view = getLayoutInflater().inflate(R.layout.view_med_card,null);
+        TextView medNameTxt = view.findViewById(R.id.medicineName);
+        TextView medTimeTxt = view.findViewById(R.id.medicineTime);
+        medNameTxt.setText(medName);
+        medTimeTxt.setText(medTime);
+        layout_list.addView(view);
+        SharedPreferences medData = getActivity().getSharedPreferences("DATA", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = medData.edit();
+        Gson gson = new Gson();
+        medicineReminder.add(new MedicineReminder(medName, medTime));
+        String json = gson.toJson(medicineReminder);
+        editor.putString("med_rem_data",json);
+        editor.apply();
+        //loadData();
+    }
+
+    private void loadData() {
+        SharedPreferences medData = getActivity().getSharedPreferences("DATA", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = medData.getString("med_rem_data",null);
+        Type type = new TypeToken<ArrayList<MedicineReminder>>(){
+
+        }.getType();
+        medicineReminder = gson.fromJson(json,type);
+
+        if (medicineReminder == null){
+            medicineReminder = new ArrayList<>();
+            medicineReminder.clear();
+        } else {
+            for (int i = 0; i < medicineReminder.size(); i++){
+                View view = getLayoutInflater().inflate(R.layout.view_med_card,null);
+                TextView medName = view.findViewById(R.id.medicineName);
+                TextView medTime = view.findViewById(R.id.medicineTime);
+                medName.setText(medicineReminder.get(i).getName());
+                medTime.setText(medicineReminder.get(i).getTime());
+                layout_list.addView(view);
+            }
+        }
+    }
+
     private boolean checkIfValidAndRead() {
         medList.clear();
         boolean result = true;
@@ -176,7 +245,6 @@ public class HomeFragment extends Fragment {
 
     private void addView() {
         View medicineView = getLayoutInflater().inflate(R.layout.medicine_add_row,null,false);
-
         TextInputLayout mName = medicineView.findViewById(R.id.medicineNameLay);
         TextInputLayout mTime = medicineView.findViewById(R.id.medicineTimeLay);
         ImageView mLayClose = medicineView.findViewById(R.id.clearMedicineLay);
@@ -186,7 +254,6 @@ public class HomeFragment extends Fragment {
                 removeMediView(medicineView);
             }
         });
-
         layout_list.addView(medicineView);
     }
 
@@ -230,5 +297,4 @@ public class HomeFragment extends Fragment {
         //Otherwise, just replace fragment
         getParentFragmentManager().beginTransaction().addToBackStack(tag).replace(R.id.container, fragment, tag).commit();
     }
-
 }
