@@ -30,6 +30,7 @@ import com.example.goodhearthealthcare.adapter.Medicine;
 import com.example.goodhearthealthcare.modal.AddMedicine;
 import com.example.goodhearthealthcare.modal.MedicineReminder;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment {
     ArrayList<AddMedicine> medList = new ArrayList<>();
     ArrayList<MedicineReminder> medicineReminder = new ArrayList<>();
     AlertDialog dialog;
+    ExtendedFloatingActionButton addMedRemFabBtn;
 
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;

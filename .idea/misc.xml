@@ -3,10 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/add_white.xml" value="0.155" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/back.xml" value="0.123" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/background_day_view.xml" value="0.155" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/buttongradient.xml" value="0.123" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/calender_profile.xml" value="0.1275" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/card_bg.xml" value="0.135" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/drawable_underline.xml" value="0.155" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/eg_bg.xml" value="0.126" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/et_bg.xml" value="0.126" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/drawable/spinner_arrow.xml" value="0.123" />
@@ -37,9 +40,11 @@
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/all_labs_view.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/bottom_sheet_table.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_about.xml" value="0.2" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_add_medicine.xml" value="0.18" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_add_medicine_reminder.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_applied_lab_test.xml" value="0.22552083333333334" />
-        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_calculate_bmi.xml" value="0.2" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_calculate_bmi.xml" value="0.22" />
+        <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_calculate_bmr.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_contact.xml" value="0.2" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_doctors_profile_view.xml" value="0.22552083333333334" />
         <entry key="..\:/SATYAM/FlutterProjectLeraning/GoodHeartHealthCare/app/src/main/res/layout/fragment_home.xml" value="0.22" />

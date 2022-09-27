@@ -34,6 +34,10 @@ import com.example.goodhearthealthcare.modal.LabTest;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,12 +46,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class ConfirmedLabTest extends AppCompatActivity {
 
-    String userID;
+    String userID, uploadReportId;
+    ;
     RecyclerView viewConfirmedLabsTest;
     TextView noConfirmLabTestTxt;
     DatabaseReference labTestRef, patientRef;
@@ -57,6 +68,8 @@ public class ConfirmedLabTest extends AppCompatActivity {
     Uri pdfUri;
     Dialog uploadReportDialog;
     PDFView uploadPdfView;
+    StorageReference uploadPdfStorageRef;
+    StorageTask uploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +81,8 @@ public class ConfirmedLabTest extends AppCompatActivity {
 
         loadingBar = new ProgressDialog(this);
         uploadReportDialog = new Dialog(this);
+
+        uploadPdfStorageRef = FirebaseStorage.getInstance().getReference().child("UploadReports");
 
         noConfirmLabTestTxt = findViewById(R.id.noConfirmLabTestTxt);
         viewConfirmedLabsTest = findViewById(R.id.viewConfirmedLabsTest);
@@ -136,6 +151,106 @@ public class ConfirmedLabTest extends AppCompatActivity {
                                     builder.show();
                                 }
                             });
+
+                            holder.itemView.findViewById(R.id.uploadTestReportImg).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    uploadReportDialog.setContentView(R.layout.upload_report_layout);
+
+                                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                    lp.copyFrom(uploadReportDialog.getWindow().getAttributes());
+                                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                                    uploadReportDialog.getWindow().setAttributes(lp);
+
+                                    TextView selectPdfFile = uploadReportDialog.findViewById(R.id.selectPdfFile);
+                                    selectPdfFile.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            if (ContextCompat.checkSelfPermission(ConfirmedLabTest.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                                                SelectFileFromStorage();
+                                            } else {
+                                                ActivityCompat.requestPermissions(ConfirmedLabTest.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                                            }
+                                        }
+                                    });
+
+                                    TextView uploadPdfFile = uploadReportDialog.findViewById(R.id.uploadPdfFile);
+                                    uploadPdfFile.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            if (pdfUri != null) {
+                                                //UploadPdfToFirebaseStorage(pdfUri);
+                                                loadingBar.setMessage("please wait...");
+                                                loadingBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                                //loadingBar.setProgress(0);
+                                                loadingBar.setCanceledOnTouchOutside(true);
+                                                loadingBar.show();
+
+                                                final String saveCurrentTime, saveCurrentDate;
+                                                Calendar calForDate = Calendar.getInstance();
+                                                SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
+                                                saveCurrentDate = currentDate.format(calForDate.getTime());
+
+                                                Calendar calForTime = Calendar.getInstance();
+                                                SimpleDateFormat currentTime = new SimpleDateFormat("HH-MM-ss");
+                                                saveCurrentTime = currentTime.format(calForTime.getTime());
+
+                                                uploadReportId = saveCurrentDate + saveCurrentTime;
+
+                                                final StorageReference fileReference = uploadPdfStorageRef.child(getFileName(pdfUri, getApplicationContext()));
+                                                //uploadPdfStorageRef.child(getFileName(pdfUri)).putFile(pdfUri);
+                                                uploadTask = fileReference.putFile(pdfUri);
+                                                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                                    @Override
+                                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                                        if (!task.isSuccessful()) {
+                                                            throw task.getException();
+                                                        }
+                                                        return fileReference.getDownloadUrl();
+                                                    }
+                                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Uri> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Uri downloadUri = task.getResult();
+                                                            String mUri = downloadUri.toString();
+                                                            //String current_uid = mAuth.getUid();
+                                                            HashMap<String, Object> reportMap = new HashMap<>();
+                                                            reportMap.put("ReportsPdf", mUri);
+                                                            reportMap.put("Date", saveCurrentDate);
+                                                            reportMap.put("Time", saveCurrentTime);
+                                                            reportMap.put("BookId", uploadReportId);
+                                                            patientRef.child(model.getPatientID()).child("LabTestConfirmed").child(model.getLabTestID()).child("Reports").updateChildren(reportMap);
+                                                            labTestRef.child(model.getLabTestID()).child("Reports").updateChildren(reportMap);
+
+                                                            HashMap map = new HashMap();
+                                                            map.put("TestStatus", "Reports Submitted");
+                                                            patientRef.child(model.getPatientID()).child("LabTestConfirmed").child(model.getLabTestID()).updateChildren(map);
+                                                            labTestRef.child(model.getLabTestID()).updateChildren(map);
+                                                            loadingBar.dismiss();
+                                                            uploadReportDialog.dismiss();
+                                                        } else {
+                                                            String message = task.getException().getMessage();
+                                                            Toast.makeText(getApplicationContext(), "Error Occurred: " + message, Toast.LENGTH_SHORT).show();
+                                                            loadingBar.dismiss();
+                                                        }
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception exception) {
+                                                        Toast.makeText(getApplicationContext(), "Error Occurred!" + exception, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            } else {
+                                                Toast.makeText(ConfirmedLabTest.this, "please select file", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+                                    uploadReportDialog.show();
+                                }
+                            });
                         }
 
                         @NonNull
@@ -185,7 +300,7 @@ public class ConfirmedLabTest extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //Toast.makeText(itemView.getContext(), "Upload reports", Toast.LENGTH_SHORT).show();
-                    uploadReportDialog.setContentView(R.layout.upload_report_layout);
+                    /*uploadReportDialog.setContentView(R.layout.upload_report_layout);
 
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                     lp.copyFrom(uploadReportDialog.getWindow().getAttributes());
@@ -204,7 +319,23 @@ public class ConfirmedLabTest extends AppCompatActivity {
                             }
                         }
                     });
-                    uploadReportDialog.show();
+
+                    TextView uploadPdfFile = uploadReportDialog.findViewById(R.id.uploadPdfFile);
+                    uploadPdfFile.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (pdfUri != null)
+                            {
+                                UploadPdfToFirebaseStorage(pdfUri);
+                            }
+                            else
+                            {
+                                Toast.makeText(ConfirmedLabTest.this, "please select file", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                    uploadReportDialog.show();*/
                 }
             });
         }
@@ -296,5 +427,4 @@ public class ConfirmedLabTest extends AppCompatActivity {
         }
         return res;
     }
-
 }

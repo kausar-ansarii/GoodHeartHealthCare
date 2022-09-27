@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.CalculateBmi"
+    tools:context=".fragments.CalculateBmr"
     android:gravity="center"
     android:padding="15dp">
 
@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/bmi_intro"
+                android:text="@string/bmr_intro"
                 android:layout_margin="8dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/nunito_sans"
@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Calculate BMI"
+                    android:text="Calculate BMR"
                     android:fontFamily="@font/nunito_sans"
                     android:textSize="17sp"
                     android:textStyle="bold"
