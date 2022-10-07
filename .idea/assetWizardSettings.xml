@@ -321,7 +321,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/C:/Users/Son%20of%20lord%20shiva/AppData/Local/Android/Sdk/icons/material/materialicons/filter_list/baseline_filter_list_24.xml" />
+                                      <entry key="url" value="file:/C:/Users/Son%20of%20lord%20shiva/AppData/Local/Android/Sdk/icons/material/materialiconstwotone/download/twotone_download_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -331,8 +331,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="717171" />
-                            <entry key="outputName" value="filter" />
+                            <entry key="color" value="2fa500" />
+                            <entry key="outputName" value="download" />
                             <entry key="sourceFile" value="F:\SATYAM\FlutterProjectLeraning\GoodHeartHealthCare" />
                           </map>
                         </option>

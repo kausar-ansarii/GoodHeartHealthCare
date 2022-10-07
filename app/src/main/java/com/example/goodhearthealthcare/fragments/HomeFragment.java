@@ -42,7 +42,7 @@ import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
-    ImageView calculateBmiImg, viewDoctorImg, viewLabsImg, viewAppliedLabImg;
+    ImageView calculateBmiImg, viewDoctorImg, viewLabsImg, viewAppliedLabImg, viewConfirmedLabImg, viewRejectedLabImg;
     RelativeLayout addMedicineBtn, submitMedicineBtn;
     LinearLayout layout_list;
     MaterialCardView submitMedicineListCard;
@@ -87,6 +87,24 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AppliedLabTest appliedLabTest = new AppliedLabTest();
+                replaceFragment(appliedLabTest,"fragmentB");
+            }
+        });
+
+        viewConfirmedLabImg = view.findViewById(R.id.viewConfirmedLabImg);
+        viewConfirmedLabImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConfirmedLabTest appliedLabTest = new ConfirmedLabTest();
+                replaceFragment(appliedLabTest,"fragmentB");
+            }
+        });
+
+        viewRejectedLabImg = view.findViewById(R.id.viewRejectedLabImg);
+        viewRejectedLabImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RejectedLabTest appliedLabTest = new RejectedLabTest();
                 replaceFragment(appliedLabTest,"fragmentB");
             }
         });
