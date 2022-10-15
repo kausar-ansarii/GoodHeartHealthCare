@@ -1,93 +1,110 @@
 package com.example.goodhearthealthcare.fragments;
 
-import static android.content.Context.MODE_PRIVATE;
-
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.CountDownTimer;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.goodhearthealthcare.MainActivity;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.example.goodhearthealthcare.R;
-import com.example.goodhearthealthcare.adapter.Medicine;
-import com.example.goodhearthealthcare.modal.AddMedicine;
-import com.example.goodhearthealthcare.modal.MedicineReminder;
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
+    private static final String CHANNEL_ID = "My channel";
+    private static final int NOTIFICATION_ID = 100;
+
+    TextInputLayout mEditTextInput;
+    TextView mTextViewCountDown;
+    Button mButtonStartPause, mButtonReset, mButtonSet;
+    CountDownTimer mCountDownTimer;
+    boolean mTimerRunning;
+    long mTimeLeftInMillis;
+
+    long mStartTimeInMillis;
+
+    long mEndTime;
+
     ImageView calculateBmiImg, viewDoctorImg, viewLabsImg, viewAppliedLabImg, viewConfirmedLabImg, viewRejectedLabImg;
-    RelativeLayout addMedicineBtn, submitMedicineBtn;
-    LinearLayout layout_list;
-    MaterialCardView submitMedicineListCard;
     //VARIABLES FOR APPOINTMENT
     ImageView viewAppliedAptImg, viewConfirmedAptImg, viewRejectedAptImg;
-    TextView medicineOneTimer;
-    RecyclerView viewMedicineForReminder;
-    ArrayList<AddMedicine> medList = new ArrayList<>();
-    ArrayList<MedicineReminder> medicineReminder = new ArrayList<>();
-    AlertDialog dialog;
-    ExtendedFloatingActionButton addMedRemFabBtn;
-
-    private CountDownTimer mCountDownTimer;
-    private boolean mTimerRunning;
-    private long mStartTimeInMillis;
-    private long mTimeLeftInMillis;
-    private long mEndTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        viewMedicineForReminder = view.findViewById(R.id.viewMedicineForReminder);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
-        viewMedicineForReminder.setLayoutManager(layoutManager);
-        viewMedicineForReminder.setAdapter(new Medicine(medList));
-
-        submitMedicineListCard = view.findViewById(R.id.submitMedicineListCard);
-
-        layout_list = view.findViewById(R.id.layout_list);
-        /*submitMedicineBtn = view.findViewById(R.id.submitMedicineBtn);
-        submitMedicineBtn.setOnClickListener(new View.OnClickListener() {
+        //TIMER LOGIC
+        mEditTextInput = view.findViewById(R.id.edit_text_input);
+        mTextViewCountDown = view.findViewById(R.id.textViewCountdown);
+        mButtonStartPause = view.findViewById(R.id.buttonStartPause);
+        mButtonReset = view.findViewById(R.id.buttonReset);
+        mButtonSet = view.findViewById(R.id.button_set);
+        mButtonSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkIfValidAndRead()){}
+                String input = mEditTextInput.getEditText().getText().toString();
+                if (input.length() == 0) {
+                    Toast.makeText(getContext(), "Field cannot be empty!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                long millisInput = Long.parseLong(input) * 60000;
+                if (millisInput == 0) {
+                    Toast.makeText(getContext(), "Number is negative", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                setTime(millisInput);
+                mEditTextInput.getEditText().setText("");
             }
-        });*/
+        });
+
+        mButtonStartPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mTimerRunning) {
+                    pauseTimer();
+                } else {
+                    startTimer();
+                }
+            }
+        });
+
+        mButtonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetTimer();
+            }
+        });
+
+        //updateCountDownText();
 
         viewAppliedLabImg = view.findViewById(R.id.viewAppliedLabImg);
         viewAppliedLabImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppliedLabTest appliedLabTest = new AppliedLabTest();
-                replaceFragment(appliedLabTest,"fragmentB");
+                replaceFragment(appliedLabTest, "fragmentB");
             }
         });
 
@@ -96,7 +113,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ConfirmedLabTest appliedLabTest = new ConfirmedLabTest();
-                replaceFragment(appliedLabTest,"fragmentB");
+                replaceFragment(appliedLabTest, "fragmentB");
             }
         });
 
@@ -105,36 +122,16 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 RejectedLabTest appliedLabTest = new RejectedLabTest();
-                replaceFragment(appliedLabTest,"fragmentB");
+                replaceFragment(appliedLabTest, "fragmentB");
             }
         });
-
-        buildDialog();
-        loadData();
-
-        addMedicineBtn = view.findViewById(R.id.addMedicineBtn);
-        addMedicineBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //addView();
-                //submitMedicineListCard.setVisibility(View.VISIBLE);
-                /*AddMedicineReminder medicineReminder = new AddMedicineReminder();
-                replaceFragment(medicineReminder,"fragmentB");*/
-                dialog.show();
-            }
-        });
-
-        //INITIALIZE THE TIME
-        //long duration = TimeUnit.HOURS.toMillis(1);
-
-        //initializeTimeCounter(duration);
 
         viewAppliedAptImg = view.findViewById(R.id.viewAppliedAptImg);
         viewAppliedAptImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ViewAppliedAppointment viewAppliedAppointment = new ViewAppliedAppointment();
-                replaceFragment(viewAppliedAppointment,"fragmentB");
+                replaceFragment(viewAppliedAppointment, "fragmentB");
             }
         });
 
@@ -143,7 +140,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ViewConfirmedAppointment confirmedAppointment = new ViewConfirmedAppointment();
-                replaceFragment(confirmedAppointment,"fragmentB");
+                replaceFragment(confirmedAppointment, "fragmentB");
             }
         });
 
@@ -152,7 +149,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ViewAppointmentRejected rejected = new ViewAppointmentRejected();
-                replaceFragment(rejected,"fragmentB");
+                replaceFragment(rejected, "fragmentB");
             }
         });
 
@@ -161,7 +158,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ViewDoctorsList viewDoctorsList = new ViewDoctorsList();
-                replaceFragment(viewDoctorsList,"fragmentB");
+                replaceFragment(viewDoctorsList, "fragmentB");
             }
         });
 
@@ -170,7 +167,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ViewLabsList viewLabsList = new ViewLabsList();
-                replaceFragment(viewLabsList,"fragmentB");
+                replaceFragment(viewLabsList, "fragmentB");
             }
         });
 
@@ -180,157 +177,17 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 CalculateBmi calculateBmi = new CalculateBmi();
                 //getParentFragmentManager().beginTransaction().replace(R.id.container, factsPage).commit();
-                replaceFragment(calculateBmi,"fragmentB");
+                replaceFragment(calculateBmi, "fragmentB");
             }
         });
 
         return view;
     }
 
-    private void buildDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        View view = getLayoutInflater().inflate(R.layout.medicine_add_row,null);
-        final TextInputLayout medName = view.findViewById(R.id.medicineNameLay);
-        final TextInputLayout medTime = view.findViewById(R.id.medicineTimeLay);
-        builder.setView(view);
-        builder.setTitle("Enter details:").setPositiveButton("Done", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                addCard(medName.getEditText().getText().toString(),medTime.getEditText().getText().toString());
-                medName.getEditText().setText("");
-                medTime.getEditText().setText("");
-            }
-        });
-        dialog = builder.create();
-    }
-
-    private void addCard(String medName, String medTime) {
-        View view = getLayoutInflater().inflate(R.layout.view_med_card,null);
-        TextView medNameTxt = view.findViewById(R.id.medicineName);
-        TextView medTimeTxt = view.findViewById(R.id.medicineTime);
-        medNameTxt.setText(medName);
-        medTimeTxt.setText(medTime);
-        Long hours = Long.valueOf(medTimeTxt.getText().toString());
-        layout_list.addView(view);
-        startTimerWithParam(Long.valueOf(medTime));
-        updateCountDownTextWithParam(medTimeTxt,hours);
-        SharedPreferences medData = getActivity().getSharedPreferences("DATA", MODE_PRIVATE);
-        SharedPreferences.Editor editor = medData.edit();
-        Gson gson = new Gson();
-        medicineReminder.add(new MedicineReminder(medName, medTime));
-        String json = gson.toJson(medicineReminder);
-        editor.putString("med_rem_data",json);
-        editor.apply();
-        //loadData();
-    }
-
-    private void loadData() {
-        SharedPreferences medData = getActivity().getSharedPreferences("DATA", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = medData.getString("med_rem_data",null);
-        Type type = new TypeToken<ArrayList<MedicineReminder>>(){
-
-        }.getType();
-        medicineReminder = gson.fromJson(json,type);
-
-        if (medicineReminder == null){
-            medicineReminder = new ArrayList<>();
-            medicineReminder.clear();
-        } else {
-            for (int i = 0; i < medicineReminder.size(); i++){
-                View view = getLayoutInflater().inflate(R.layout.view_med_card,null);
-                TextView medName = view.findViewById(R.id.medicineName);
-                TextView medTime = view.findViewById(R.id.medicineTime);
-                medName.setText(medicineReminder.get(i).getName());
-                medTime.setText(medicineReminder.get(i).getTime());
-                layout_list.addView(view);
-            }
-        }
-    }
-
-    /*private boolean checkIfValidAndRead() {
-        medList.clear();
-        boolean result = true;
-
-        for (int i = 0; i<layout_list.getChildCount(); i++){
-            View medicineView = layout_list.getChildAt(i);
-            TextInputLayout mName = medicineView.findViewById(R.id.medicineNameLay);
-            TextInputLayout mTime = medicineView.findViewById(R.id.medicineTimeLay);
-
-            String mNameStr = mName.getEditText().getText().toString();
-            String mTimeStr = mTime.getEditText().getText().toString();
-
-            AddMedicine addMedicine = new AddMedicine();
-
-            if (!mNameStr.isEmpty() || !mTimeStr.isEmpty()){
-                addMedicine.setMedName(mNameStr);
-                addMedicine.setMedTime(mTimeStr);
-            } else {
-                result = false;
-                break;
-            }
-
-            medList.add(addMedicine);
-        }
-
-        return result;
-    }
-
-    private void addView() {
-        View medicineView = getLayoutInflater().inflate(R.layout.medicine_add_row,null,false);
-        TextInputLayout mName = medicineView.findViewById(R.id.medicineNameLay);
-        TextInputLayout mTime = medicineView.findViewById(R.id.medicineTimeLay);
-        ImageView mLayClose = medicineView.findViewById(R.id.clearMedicineLay);
-        mLayClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeMediView(medicineView);
-            }
-        });
-        layout_list.addView(medicineView);
-    }
-
-    private void removeMediView(View v) {
-        layout_list.removeView(v);
-    }*/
-
-    /*private void initializeTimeCounter(long duration) {
-        new CountDownTimer(duration, 1000) {
-            @Override
-            public void onTick(long l) {
-                String sDur = String.format(Locale.ENGLISH,"%d : %02d : %02d"
-                        , TimeUnit.MILLISECONDS.toHours(l)
-                        , TimeUnit.MILLISECONDS.toMinutes(l)
-                        , TimeUnit.MILLISECONDS.toSeconds(l) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(l)));
-
-                medicineOneTimer.setText(sDur);
-            }
-
-            @Override
-            public void onFinish() {
-                // THIS IS THE EXAMPLE OF RECURRENCE RELATION OR RECURRENCE FUNCTION which means
-                // Function is calling itself again and again and it will work infinity times or when the user dies
-                initializeTimeCounter(duration);
-            }
-        }.start();
-    }*/
-
-    private void startTimerWithParam(Long time) {
-        mEndTime = System.currentTimeMillis() + time;
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
-            }
-
-            @Override
-            public void onFinish() {
-                mTimerRunning = false;
-            }
-        }.start();
-        mTimerRunning = true;
+    private void setTime(long milliseconds) {
+        mStartTimeInMillis = milliseconds;
+        resetTimer();
+        closeKeyboard();
     }
 
     private void startTimer() {
@@ -345,43 +202,113 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFinish() {
                 mTimerRunning = false;
+                updateWatchInterface();
+                generateNotification();
             }
         }.start();
         mTimerRunning = true;
+        updateWatchInterface();
+    }
+
+    private void generateNotification() {
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.logo, null);
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+        Bitmap largeIcon = bitmapDrawable.getBitmap();
+
+        NotificationManager nm = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notification = new Notification.Builder(getContext())
+                    .setLargeIcon(largeIcon)
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentText("It's time for your medicine")
+                    .setSubText("Hey Buddy!")
+                    .setChannelId(CHANNEL_ID)
+                    .build();
+            nm.createNotificationChannel(new NotificationChannel(CHANNEL_ID, "New Channel", NotificationManager.IMPORTANCE_HIGH));
+        } else {
+            notification = new Notification.Builder(getContext())
+                    .setLargeIcon(largeIcon)
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentText("Hey Buddy!")
+                    .setSubText("It's time for your medicine")
+                    .build();
+        }
+
+        nm.notify(NOTIFICATION_ID, notification);
+    }
+
+    private void closeKeyboard() {
+        View viewKeyBoard = getActivity().getCurrentFocus();
+        if (viewKeyBoard != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(viewKeyBoard.getWindowToken(), 0);
+        }
+    }
+
+    private void pauseTimer() {
+        mCountDownTimer.cancel();
+        mTimerRunning = false;
+        updateWatchInterface();
+    }
+
+    private void resetTimer() {
+        mTimeLeftInMillis = mStartTimeInMillis;
+        updateCountDownText();
+        updateWatchInterface();
     }
 
     private void updateCountDownText() {
         int hours = (int) (mTimeLeftInMillis / 1000) / 3600;
         int minutes = (int) ((mTimeLeftInMillis / 1000) % 3600) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds);
-        //View view = getLayoutInflater().inflate(R.layout.card,null);
-        //EditText timeET = view.findViewById(R.id.medicineTime);
-        //mTextViewCountDown.setText(timeLeftFormatted);
-        //timeET.setText(timeLeftFormatted);
+
+        String timeLeftFormatted;
+
+        if (hours > 0) {
+            timeLeftFormatted = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        }
+        mTextViewCountDown.setText(timeLeftFormatted);
     }
 
-    private void updateCountDownTextWithParam(TextView medTimeTxt, Long hoursParent) {
-        int hours = (int) (mTimeLeftInMillis / 1000) / 3600;
-        int minutes = (int) ((mTimeLeftInMillis / 1000) % 3600) / 60;
-        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%d:%02d:%02d", hoursParent, minutes, seconds);
-        //View view = getLayoutInflater().inflate(R.layout.card,null);
-        //EditText timeET = view.findViewById(R.id.medicineTime);
-        //mTextViewCountDown.setText(timeLeftFormatted);
-        medTimeTxt.setText(timeLeftFormatted);
+    private void updateWatchInterface() {
+        if (mTimerRunning) {
+            mEditTextInput.setVisibility(View.GONE);
+            mButtonSet.setVisibility(View.GONE);
+            mButtonReset.setVisibility(View.GONE);
+            mButtonStartPause.setText("Pause");
+        } else {
+            mEditTextInput.setVisibility(View.VISIBLE);
+            mButtonSet.setVisibility(View.VISIBLE);
+            mButtonStartPause.setText("Start");
+
+            if (mTimeLeftInMillis < 1000) {
+                mButtonStartPause.setVisibility(View.GONE);
+            } else {
+                mButtonStartPause.setVisibility(View.VISIBLE);
+            }
+
+            if (mTimeLeftInMillis < mStartTimeInMillis) {
+                mButtonReset.setVisibility(View.VISIBLE);
+            } else {
+                mButtonReset.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        SharedPreferences prefs = getActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("startTimeInMillis", mStartTimeInMillis);
         editor.putLong("millisLeft", mTimeLeftInMillis);
         editor.putBoolean("timerRunning", mTimerRunning);
         editor.putLong("endTime", mEndTime);
         editor.apply();
+
         if (mCountDownTimer != null) {
             mCountDownTimer.cancel();
         }
@@ -390,18 +317,23 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        SharedPreferences prefs = getActivity().getSharedPreferences("prefs", MODE_PRIVATE);
-        mTimeLeftInMillis = prefs.getLong("startTimeInMillis", 600000);
+        SharedPreferences prefs = getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        mStartTimeInMillis = prefs.getLong("startTimeInMillis", 600000);
         mTimeLeftInMillis = prefs.getLong("millisLeft", mStartTimeInMillis);
         mTimerRunning = prefs.getBoolean("timerRunning", false);
+
         updateCountDownText();
+        updateWatchInterface();
+
         if (mTimerRunning) {
             mEndTime = prefs.getLong("endTime", 0);
             mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+
             if (mTimeLeftInMillis < 0) {
                 mTimeLeftInMillis = 0;
                 mTimerRunning = false;
                 updateCountDownText();
+                updateWatchInterface();
             } else {
                 startTimer();
             }

@@ -27,6 +27,11 @@ import com.example.goodhearthealthcare.fragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navView;
     Toolbar toolbar;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    //String currentUserID = mAuth.getCurrentUser().getUid();
+    String currentUserID = mAuth.getCurrentUser().getUid();
+    DatabaseReference usersRef;
     //DocumentReference usersRef;
     //FirebaseFirestore db = FirebaseFirestore.getInstance();
     ImageView header_profile_image;
@@ -62,6 +68,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navHeaderEmail = headerView.findViewById(R.id.navHeaderEmail);
 
         //(START) FIREBASE CODE GOES HERE TO SHOW THE NAME, EMAIL AMD IMAGE OF CURRENT USER WHO HAS LOGGED IN
+        usersRef = FirebaseDatabase.getInstance().getReference().child("Patients");
+        usersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    String fname = dataSnapshot.child("fName").getValue().toString();
+                    String lname = dataSnapshot.child("lName").getValue().toString();
+                    String email = dataSnapshot.child("Email").getValue().toString();
+                    navHeaderName.setText(fname+" "+lname);
+                    navHeaderEmail.setText(email);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //(STOP)
         navView.bringToFront();
