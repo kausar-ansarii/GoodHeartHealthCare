@@ -32,6 +32,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DatabaseReference usersRef;
     //DocumentReference usersRef;
     //FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ImageView header_profile_image;
+    CircleImageView header_profile_image;
     TextView navHeaderName, navHeaderEmail;
     ProgressDialog dialog;
 
@@ -63,10 +68,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //NAVIGATION VIEW CODE --> for implementation of the navigation drawer header where we have (Image, Name and E-mail)
         navView = findViewById(R.id.navView);
         View headerView = navView.inflateHeaderView(R.layout.nav_header);
-        header_profile_image = headerView.findViewById(R.id.header_profile_image);
+        header_profile_image = headerView.findViewById(R.id.headerProfileImage);
         navHeaderName = headerView.findViewById(R.id.navHeaderName);
         navHeaderEmail = headerView.findViewById(R.id.navHeaderEmail);
 
+        dialog.setMessage("please wait...");
+        dialog.show();
         //(START) FIREBASE CODE GOES HERE TO SHOW THE NAME, EMAIL AMD IMAGE OF CURRENT USER WHO HAS LOGGED IN
         usersRef = FirebaseDatabase.getInstance().getReference().child("Patients");
         usersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
@@ -78,6 +85,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String email = dataSnapshot.child("Email").getValue().toString();
                     navHeaderName.setText(fname+" "+lname);
                     navHeaderEmail.setText(email);
+
+                    dialog.dismiss();
+
+                    final String image = dataSnapshot.child("image").getValue().toString();
+                    if (!image.equals("default"))
+                    {
+                        Picasso.with(MainActivity.this).load(image).placeholder(R.drawable.profile).into(header_profile_image);
+                        Picasso.with(MainActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.profile).into(header_profile_image, new Callback() {
+                            @Override
+                            public void onSuccess()
+                            {}
+
+                            @Override
+                            public void onError()
+                            {
+                                Picasso.with(MainActivity.this).load(image).placeholder(R.drawable.profile).into(header_profile_image);
+                            }
+                        });
+                    }
                 }
             }
 

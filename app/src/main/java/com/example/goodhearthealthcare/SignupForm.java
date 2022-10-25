@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +20,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
@@ -38,6 +47,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SignupForm extends AppCompatActivity {
 
@@ -53,6 +64,15 @@ public class SignupForm extends AppCompatActivity {
     DatabaseReference patientsRef;
     String userID;
 
+    //VARIABLES FOR PROFILE IMAGE UPLOAD
+    CircleImageView setupProfileImage;
+    Uri imageUri;
+    StorageReference storagePicRef;
+    String myUrl = "";
+    String checker = "";
+    StorageTask uploadTask;
+    Button uploadImgBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +82,20 @@ public class SignupForm extends AppCompatActivity {
         loadingBar = new ProgressDialog(this);
 
         patientsRef = FirebaseDatabase.getInstance().getReference().child("Patients");
+
+        //HOOKS FOR IMAGE UPLOAD
+        storagePicRef = FirebaseStorage.getInstance().getReference().child("ProfilePictures");
+        setupProfileImage = findViewById(R.id.setupProfileImage);
+        setupProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.activity(imageUri)
+                        .setAspectRatio(1, 1)
+                        .start(SignupForm.this);
+            }
+        });
+
+        uploadImgBtn = findViewById(R.id.uploadImgBtn);
 
         //HOOKS FOR THE VARIABLES(for eg. TextFields, Buttons, Views, etc)
         //--This is for TextInputLayout
@@ -224,16 +258,60 @@ public class SignupForm extends AppCompatActivity {
                         public void onComplete(@NonNull Task task) {
                             if (task.isSuccessful()) {
                                 AuthCredential credentialAuth = EmailAuthProvider.getCredential(email, password);
-                                mAuth.getCurrentUser().linkWithCredential(credentialAuth);
-                                Intent intent = new Intent(getApplicationContext(), AddDiseasesActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                finish();
-                            } else {
+                                mAuth.getCurrentUser().linkWithCredential(credentialAuth).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()){
+                                            if (imageUri != null)
+                                            {
+                                                final StorageReference fileref = storagePicRef.child(userID + ".jpg");
+                                                uploadTask = fileref.putFile(imageUri);
+                                                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot,Task<Uri>>() {
+                                                    @Override
+                                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception
+                                                    {
+                                                        if (!task.isSuccessful())
+                                                        {
+                                                            throw task.getException();
+                                                        }
+                                                        return fileref.getDownloadUrl();
+                                                    }
+                                                }).addOnCompleteListener(new OnCompleteListener<Uri>()
+                                                {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Uri> task)
+                                                    {
+                                                        if (task.isSuccessful())
+                                                        {
+                                                            Uri downloadUrl = task.getResult();
+                                                            myUrl = downloadUrl.toString();
+                                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(userID);
+                                                            HashMap<String, Object> userMapImg = new HashMap<String, Object>();
+                                                            userMapImg.put("image",myUrl);
+                                                            ref.updateChildren(userMapImg);
 
+                                                            Intent intent = new Intent(getApplicationContext(), AddDiseasesActivity.class);
+                                                            startActivity(intent);
+                                                            finish();
+
+                                                            loadingBar.dismiss();
+                                                        } else {
+                                                            String msg = task.getException().getMessage();
+                                                            Toast.makeText(SignupForm.this, msg, Toast.LENGTH_LONG).show();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(getApplicationContext(), "No image selected!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                });
+                            } else {
                                 Toast.makeText(SignupForm.this, "Something went wrong", Toast.LENGTH_LONG).show();
                             }
-                            loadingBar.dismiss();
                         }
                     });
                     /*loadingBar.setTitle("please wait...");
@@ -324,6 +402,20 @@ public class SignupForm extends AppCompatActivity {
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            imageUri = result.getUri();
+            setupProfileImage.setImageURI(imageUri);
+        } else {
+            Toast.makeText(this, "Error! Try again.", Toast.LENGTH_SHORT).show();
+            //startActivity(new Intent(SetupActivity.this,SetupActivity.class));
+            //finish();
         }
     }
 }

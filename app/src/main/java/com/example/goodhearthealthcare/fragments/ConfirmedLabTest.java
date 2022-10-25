@@ -1,19 +1,22 @@
 package com.example.goodhearthealthcare.fragments;
 
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
+
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.goodhearthealthcare.R;
 import com.example.goodhearthealthcare.modal.LabTest;
@@ -26,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ConfirmedLabTest extends Fragment {
 
@@ -36,6 +41,8 @@ public class ConfirmedLabTest extends Fragment {
     ProgressDialog loadingBar;
     FirebaseAuth mAuth;
     TextView noLabTestAppliedTxt;
+    FirebaseStorage reportFirebaseStorage;
+    StorageReference reportStorageRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,8 +51,10 @@ public class ConfirmedLabTest extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
-
         loadingBar = new ProgressDialog(getActivity());
+
+        reportFirebaseStorage = FirebaseStorage.getInstance();
+        reportStorageRef = reportFirebaseStorage.getReference().child("UploadReports");
 
         noLabTestAppliedTxt = view.findViewById(R.id.noLabTestAppliedTxt);
         viewLabTestRequest = view.findViewById(R.id.viewLabTestRequest);
@@ -90,13 +99,27 @@ public class ConfirmedLabTest extends Fragment {
                             if (model.getTestStatus().toString().equals("Reports Submitted")) {
                                 holder.itemView.findViewById(R.id.downloadTestReportImg).setVisibility(View.VISIBLE);
                             }
+                            DatabaseReference repRef = patientRef.child(userID).child("LabTestConfirmed").child(model.getLabTestID()).child("Reports");
                             holder.itemView.findViewById(R.id.downloadTestReportImg).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Toast.makeText(getContext(), "Logic yet to implement...", Toast.LENGTH_SHORT).show();
+                                    repRef.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            String url = snapshot.child("ReportsPdf").getValue().toString();
+                                            downloadFile(url);
+                                            //downloadBookFunction(getContext(), userID, ".pdf", DIRECTORY_DOWNLOADS, url);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    });
+                                    //Toast.makeText(getContext(), "Logic yet to implement...", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
+
                         @NonNull
                         @Override
                         public viewLabTestConViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -114,7 +137,8 @@ public class ConfirmedLabTest extends Fragment {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
 
@@ -163,5 +187,39 @@ public class ConfirmedLabTest extends Fragment {
             CircleImageView donorimage = (CircleImageView) mView.findViewById(R.id.donor_profile_image);
             Picasso.with(ctx).load(image).into(donorimage);
         }*/
+    }
+
+    private void downloadFile(String repName) {
+        ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setMessage("Downloading Please Wait!");
+        pd.setCanceledOnTouchOutside(false);
+        pd.show();
+        downloadBookFunction(getContext(), userID, ".pdf", DIRECTORY_DOWNLOADS, repName);
+        /*reportStorageRef.child(repName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                downloadBookFunction(getContext(), userID, ".pdf", DIRECTORY_DOWNLOADS, uri.toString());
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    pd.dismiss();
+                    Toast.makeText(getContext(), "downloading", Toast.LENGTH_SHORT).show();
+                } else {
+                    String msg = task.getException().getMessage();
+                    Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
+    }
+
+    private void downloadBookFunction(Context context, String fileName, String extension, String destinationDir, String url) {
+        DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(destinationDir, "Health Heart/" + "Reports/" + fileName + extension);
+        manager.enqueue(request);
     }
 }

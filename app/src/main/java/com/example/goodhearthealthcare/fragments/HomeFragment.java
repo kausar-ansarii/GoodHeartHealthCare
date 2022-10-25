@@ -16,15 +16,24 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.goodhearthealthcare.R;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
@@ -36,23 +45,48 @@ public class HomeFragment extends Fragment {
     TextInputLayout mEditTextInput;
     TextView mTextViewCountDown;
     Button mButtonStartPause, mButtonReset, mButtonSet;
+    LinearLayout diabeticMedicineReminder;
     CountDownTimer mCountDownTimer;
     boolean mTimerRunning;
     long mTimeLeftInMillis;
-
     long mStartTimeInMillis;
-
     long mEndTime;
 
-    ImageView calculateBmiImg, viewDoctorImg, viewLabsImg, viewAppliedLabImg, viewConfirmedLabImg, viewRejectedLabImg;
+    ImageView calculateBmiImg, viewDoctorImg, viewNurseImg, viewLabsImg, viewAppliedLabImg, viewConfirmedLabImg, viewRejectedLabImg;
     //VARIABLES FOR APPOINTMENT
     ImageView viewAppliedAptImg, viewConfirmedAptImg, viewRejectedAptImg;
+
+    FirebaseAuth mAuth;
+    DatabaseReference userRef;
+    String currUserId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
+        userRef = FirebaseDatabase.getInstance().getReference().child("Patients");
+        currUserId = mAuth.getCurrentUser().getUid();
+
+        diabeticMedicineReminder = view.findViewById(R.id.diabeticMedicineReminder);
+
+        userRef.child(currUserId).child("OldMedi").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String diabetesCheck = snapshot.child("HaveDiabetes").getValue().toString();
+                    if (diabetesCheck.equals("YES")){
+                        diabeticMedicineReminder.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         //TIMER LOGIC
         mEditTextInput = view.findViewById(R.id.edit_text_input);
         mTextViewCountDown = view.findViewById(R.id.textViewCountdown);
@@ -98,6 +132,15 @@ public class HomeFragment extends Fragment {
         });
 
         //updateCountDownText();
+
+        viewNurseImg = view.findViewById(R.id.viewNurseImg);
+        viewNurseImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewNurseList viewNurseList = new ViewNurseList();
+                replaceFragment(viewNurseList, "fragmentB");
+            }
+        });
 
         viewAppliedLabImg = view.findViewById(R.id.viewAppliedLabImg);
         viewAppliedLabImg.setOnClickListener(new View.OnClickListener() {
