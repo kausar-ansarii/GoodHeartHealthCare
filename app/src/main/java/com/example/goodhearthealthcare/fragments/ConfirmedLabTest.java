@@ -182,36 +182,14 @@ public class ConfirmedLabTest extends Fragment {
             TextView tStatus = itemView.findViewById(R.id.labTestStatus);
             tStatus.setText(status);
         }
-        /*public void setImagee(Context ctx, String image)
-        {
-            CircleImageView donorimage = (CircleImageView) mView.findViewById(R.id.donor_profile_image);
-            Picasso.with(ctx).load(image).into(donorimage);
-        }*/
     }
 
     private void downloadFile(String repName) {
         ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setMessage("Downloading Please Wait!");
+        pd.setMessage("Downloading report. please wait for few moment.");
         pd.setCanceledOnTouchOutside(false);
         pd.show();
         downloadBookFunction(getContext(), userID, ".pdf", DIRECTORY_DOWNLOADS, repName);
-        /*reportStorageRef.child(repName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                downloadBookFunction(getContext(), userID, ".pdf", DIRECTORY_DOWNLOADS, uri.toString());
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    pd.dismiss();
-                    Toast.makeText(getContext(), "downloading", Toast.LENGTH_SHORT).show();
-                } else {
-                    String msg = task.getException().getMessage();
-                    Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
     }
 
     private void downloadBookFunction(Context context, String fileName, String extension, String destinationDir, String url) {

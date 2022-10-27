@@ -1,8 +1,5 @@
 package com.example.goodhearthealthcare;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,22 +8,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class OTPScreen extends AppCompatActivity {
@@ -69,7 +65,7 @@ public class OTPScreen extends AppCompatActivity {
         otpTextField = findViewById(R.id.otpTextField);
 
         otpText = findViewById(R.id.otpText);
-        otpText.setText("OTP sent to +91-"+number);
+        otpText.setText("OTP sent to +91-" + number);
 
         initiateOTP();
 
@@ -133,111 +129,25 @@ public class OTPScreen extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "OTP Verified ", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), SignupForm.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
-                    /*AuthCredential credentialAuth = EmailAuthProvider.getCredential(email, password);
-                    mAuth.getCurrentUser().linkWithCredential(credentialAuth);*/
-                    /*FirebaseUser user = task.getResult().getUser();
-                    String userID = user.getUid();
-
-                    HashMap userMap = new HashMap();
-                    userMap.put("Name", name);
-                    userMap.put("Email", email);
-                    userMap.put("Password", password);
-                    userMap.put("Phone", phone);
-                    userMap.put("uid", userID);
-                    userMap.put("About", "Hello There, I'm fact lover. I'm using this app to grow my knowledge.");
-                    db.collection("Users").document(userID).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(VerifyPhoneActivity.this, "OTP Verified ", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(getApplicationContext(), VerifyEmailActivity.class);
-                                intent.putExtra("email",email);
-                                startActivity(intent);
-                            } else {
-                                String msg = task.getException().getMessage();
-                                Toast.makeText(VerifyPhoneActivity.this, msg, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });*/
-
-                    /*userID = mAuth.getCurrentUser().getUid();
-                    HashMap patientMap = new HashMap();
-                    patientMap.put("fName", fName);
-                    patientMap.put("lName", lName);
-                    patientMap.put("DOB", dob);
-                    patientMap.put("Age", age);
-                    patientMap.put("Gender", gender);
-                    patientMap.put("MaritalStatus", marital);
-                    patientMap.put("Address", address);
-                    patientMap.put("City", city);
-                    patientMap.put("District", district);
-                    patientMap.put("Pincode", pincode);
-                    patientMap.put("Phone", number);
-                    patientMap.put("AltPhone", altPhone);
-                    patientMap.put("Email", email);
-                    patientMap.put("Password", password);
-                    patientMap.put("image", "default");
-                    patientMap.put("userID", userID);
-                    patientsRef.child(userID).updateChildren(patientMap).addOnCompleteListener(new OnCompleteListener() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "OTP Verified ", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                finish();
-
-                            } else {
-                                String msg = task.getException().getMessage();
-                                Toast.makeText(OTPScreen.this, msg, Toast.LENGTH_SHORT).show();
-                            }
-                            dialog.dismiss();
-                        }
-                    });*/
-
-                    /*dialog.setTitle("please wait...");
-                    dialog.setMessage("creation of account and saving of data is in progress. don't click back button");
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.show();
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-
-                            } else {
-                                String msg = task.getException().getMessage();
-                                Toast.makeText(OTPScreen.this, "Error: " + msg, Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
-                            }
-                        }
-                    });*/
-                    // Update UI
-                } else
-                {
+                } else {
                     dialog.setTitle("Please wait...");
                     dialog.setMessage("Verifying...");
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
                     String msg = task.getException().getMessage();
-                if(msg.equals("The sms code has expired. Please re-send the verification code to try again.")){
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Code Expired", Toast.LENGTH_LONG).show();
-
-                }
-                else if(msg.equals("The sms verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure use the verification code provided by the user.")){
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(),"Invalid Code",Toast.LENGTH_LONG).show();
-
-                }
-                else{
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_LONG).show();
-                }
-
+                    if (msg.equals("The sms code has expired. Please re-send the verification code to try again.")) {
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Code Expired", Toast.LENGTH_LONG).show();
+                    } else if (msg.equals("The sms verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure use the verification code provided by the user.")) {
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Invalid Code", Toast.LENGTH_LONG).show();
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });

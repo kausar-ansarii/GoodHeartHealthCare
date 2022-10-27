@@ -1,8 +1,5 @@
 package com.example.goodhearthealthcare.receptionist;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.goodhearthealthcare.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,14 +25,14 @@ import java.util.HashMap;
 
 public class AddStaffActivity extends AppCompatActivity {
 
-    Button addStaffBtn,clearFormBtn;
+    Button addStaffBtn, clearFormBtn;
     DatabaseReference hospitalRef, doctorsRef;
     ProgressDialog loadingBar;
     Spinner addStaffRole;
-    String hospIDStr,hospNameStr,hospAddressStr;
+    String hospIDStr, hospNameStr, hospAddressStr;
     LinearLayout spinnerDoctorRoleLay;
-    TextInputLayout staffRoleTextField,doctorSpecSpinnerLay,staffGenderLay,
-            staffNameLay,staffAddressLay,staffPhoneLay,staffEmailLay,hospitalIDLay;
+    TextInputLayout staffRoleTextField, doctorSpecSpinnerLay, staffGenderLay, staffQualificationLay,
+            staffNameLay, staffAddressLay, staffPhoneLay, staffEmailLay, hospitalIDLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class AddStaffActivity extends AppCompatActivity {
         loadingBar = new ProgressDialog(this);
         hospitalRef = FirebaseDatabase.getInstance().getReference().child("Staffs");
 
+        staffQualificationLay = findViewById(R.id.staffQualificationLay);
         hospitalIDLay = findViewById(R.id.hospitalIDLay);
         hospitalIDLay.getEditText().setText(hospIDStr);
         staffNameLay = findViewById(R.id.staffNameLay);
@@ -76,42 +77,42 @@ public class AddStaffActivity extends AppCompatActivity {
                 String staffAddress = staffAddressLay.getEditText().getText().toString();
                 String staffPhone = staffPhoneLay.getEditText().getText().toString();
                 String staffEmail = staffEmailLay.getEditText().getText().toString();
+                String staffQuali = staffQualificationLay.getEditText().getText().toString();
                 String staffGender = staffGenderLay.getEditText().getText().toString();
                 String staffRole = staffRoleTextField.getEditText().getText().toString();
                 String doctorSpecial = doctorSpecSpinnerLay.getEditText().getText().toString();
 
-                if (staffName.isEmpty()||staffAddress.isEmpty()||staffPhone.isEmpty()||staffEmail.isEmpty()||
-                        staffGender.isEmpty()||staffRole.isEmpty()){
+                if (staffName.isEmpty() || staffAddress.isEmpty() || staffPhone.isEmpty() || staffEmail.isEmpty() ||
+                        staffGender.isEmpty() || staffRole.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Some Field's are empty", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     loadingBar.setMessage("please wait...");
                     loadingBar.setCanceledOnTouchOutside(false);
                     loadingBar.show();
 
                     HashMap<String, Object> staffMap = new HashMap<>();
-                    staffMap.put("StaffName",staffName);
-                    staffMap.put("StaffAddress",staffAddress);
-                    staffMap.put("StaffPhone",staffPhone);
-                    staffMap.put("StaffEmail",staffEmail);
-                    staffMap.put("StaffGender",staffGender);
-                    staffMap.put("StaffRole",staffRole);
-                    staffMap.put("DoctorSpecial",doctorSpecial);
-                    staffMap.put("image","default");
-                    staffMap.put("Password","dummy");
-                    staffMap.put("HospitalID",hospIDStr);
-                    staffMap.put("HospitalName",hospNameStr);
-                    staffMap.put("HospitalAddress",hospAddressStr);
+                    staffMap.put("StaffName", staffName);
+                    staffMap.put("StaffAddress", staffAddress);
+                    staffMap.put("StaffPhone", staffPhone);
+                    staffMap.put("StaffEmail", staffEmail);
+                    staffMap.put("StaffQualification", staffQuali);
+                    staffMap.put("StaffGender", staffGender);
+                    staffMap.put("StaffRole", staffRole);
+                    staffMap.put("DoctorSpecial", doctorSpecial);
+                    staffMap.put("image", "default");
+                    staffMap.put("Password", "dummy");
+                    staffMap.put("HospitalID", hospIDStr);
+                    staffMap.put("HospitalName", hospNameStr);
+                    staffMap.put("HospitalAddress", hospAddressStr);
                     hospitalRef.child(staffRole).child(staffPhone).updateChildren(staffMap).addOnCompleteListener(
                             new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         loadingBar.dismiss();
                                         clearFormFields();
-                                        Toast.makeText(AddStaffActivity.this, staffRole+" added successfully.", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else {
+                                        Toast.makeText(AddStaffActivity.this, staffRole + " added successfully.", Toast.LENGTH_SHORT).show();
+                                    } else {
                                         loadingBar.dismiss();
                                         String msg = task.getException().getMessage();
                                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();

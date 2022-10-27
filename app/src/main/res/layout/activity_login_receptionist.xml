@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/mtrl_textinput_default_box_stroke_color"
                 android:inputType="textEmailAddress"
-                android:text="GoodHealth"/>
+                android:text="goodhealth@gmail.com"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

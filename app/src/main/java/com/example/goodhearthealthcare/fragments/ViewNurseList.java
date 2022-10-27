@@ -21,9 +21,12 @@ import com.example.goodhearthealthcare.modal.Staff;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class ViewNurseList extends Fragment {
 
@@ -32,6 +35,7 @@ public class ViewNurseList extends Fragment {
     ProgressDialog loadingBar;
     String patientIDStr, currUserId;
     FirebaseAuth mAuth;
+    TextView noNurseTxt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class ViewNurseList extends Fragment {
 
         loadingBar = new ProgressDialog(getActivity());
 
+        noNurseTxt = view.findViewById(R.id.noNurseTxt);
         viewNurseListForAppointment = view.findViewById(R.id.viewNurseListForAppointment);
         viewNurseListForAppointment.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -68,38 +73,53 @@ public class ViewNurseList extends Fragment {
     }
 
     private void startListen() {
-
-        Query query = nurseList.child("Staffs").child("Nurse").limitToLast(50);
-        FirebaseRecyclerOptions<Staff> options = new FirebaseRecyclerOptions.Builder<Staff>().setQuery(query, Staff.class).build();
-        FirebaseRecyclerAdapter<Staff, viewNurseListViewHolder> adapter = new FirebaseRecyclerAdapter<Staff, viewNurseListViewHolder>(options) {
+        nurseList.child("Staffs").child("Nurse").addValueEventListener(new ValueEventListener() {
             @Override
-            protected void onBindViewHolder(@NonNull viewNurseListViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull final Staff model) {
-                holder.setName(model.getStaffName());
-                holder.setHosName(model.getHospitalName());
-                holder.setHospAddress(model.getHospitalAddress());
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String sPhone = model.getStaffPhone();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("staffPhone", sPhone);
-                        NurseProfileFragment profileView = new NurseProfileFragment();
-                        profileView.setArguments(bundle);
-                        ((MainActivity) getActivity()).replaceFragment(profileView,"fragmentC");
-                    }
-                });
-                loadingBar.dismiss();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    Query query = nurseList.child("Staffs").child("Nurse").limitToLast(50);
+                    FirebaseRecyclerOptions<Staff> options = new FirebaseRecyclerOptions.Builder<Staff>().setQuery(query, Staff.class).build();
+                    FirebaseRecyclerAdapter<Staff, viewNurseListViewHolder> adapter = new FirebaseRecyclerAdapter<Staff, viewNurseListViewHolder>(options) {
+                        @Override
+                        protected void onBindViewHolder(@NonNull viewNurseListViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull final Staff model) {
+                            holder.setName(model.getStaffName());
+                            holder.setHosName(model.getHospitalName());
+                            holder.setHospAddress(model.getHospitalAddress());
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String sPhone = model.getStaffPhone();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("staffPhone", sPhone);
+                                    NurseProfileFragment profileView = new NurseProfileFragment();
+                                    profileView.setArguments(bundle);
+                                    ((MainActivity) getActivity()).replaceFragment(profileView,"fragmentC");
+                                }
+                            });
+                            loadingBar.dismiss();
+                        }
+
+                        @NonNull
+                        @Override
+                        public viewNurseListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_nurse_view, parent, false);
+                            return new viewNurseListViewHolder(view);
+                        }
+                    };
+                    viewNurseListForAppointment.setAdapter(adapter);
+                    adapter.startListening();
+                } else {
+                    viewNurseListForAppointment.setVisibility(View.GONE);
+                    noNurseTxt.setVisibility(View.VISIBLE);
+                    loadingBar.dismiss();
+                }
             }
 
-            @NonNull
             @Override
-            public viewNurseListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_nurse_view, parent, false);
-                return new viewNurseListViewHolder(view);
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
-        };
-        viewNurseListForAppointment.setAdapter(adapter);
-        adapter.startListening();
+        });
     }
 
     public static class viewNurseListViewHolder extends RecyclerView.ViewHolder {

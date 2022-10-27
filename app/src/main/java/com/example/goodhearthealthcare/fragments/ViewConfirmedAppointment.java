@@ -77,9 +77,9 @@ public class ViewConfirmedAppointment extends Fragment {
                 if (snapshot.exists()){
                     Query query = FirebaseDatabase.getInstance().getReference().child("Patients").child(userID).child("AppointmentConfirmed").limitToLast(50);
                     FirebaseRecyclerOptions<AppointmentRequest> options = new FirebaseRecyclerOptions.Builder<AppointmentRequest>().setQuery(query, AppointmentRequest.class).build();
-                    FirebaseRecyclerAdapter<AppointmentRequest, ViewAppliedAppointment.viewAppointmentReqViewHolder> adapter = new FirebaseRecyclerAdapter<AppointmentRequest, ViewAppliedAppointment.viewAppointmentReqViewHolder>(options) {
+                    FirebaseRecyclerAdapter<AppointmentRequest, viewAppointmentConfViewHolder> adapter = new FirebaseRecyclerAdapter<AppointmentRequest, viewAppointmentConfViewHolder>(options) {
                         @Override
-                        protected void onBindViewHolder(@NonNull ViewAppliedAppointment.viewAppointmentReqViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull final AppointmentRequest model) {
+                        protected void onBindViewHolder(@NonNull viewAppointmentConfViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull final AppointmentRequest model) {
                             //final String PostKey = getRef(position).getKey();
                             holder.setName(model.getPatientName());
                             holder.setPhone(model.getPatientPhone());
@@ -92,9 +92,9 @@ public class ViewConfirmedAppointment extends Fragment {
 
                         @NonNull
                         @Override
-                        public ViewAppliedAppointment.viewAppointmentReqViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        public viewAppointmentConfViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_appointment_req_patient, parent, false);
-                            return new ViewAppliedAppointment.viewAppointmentReqViewHolder(view);
+                            return new viewAppointmentConfViewHolder(view);
                         }
                     };
                     viewAppointmentConfirmed.setAdapter(adapter);
@@ -113,8 +113,8 @@ public class ViewConfirmedAppointment extends Fragment {
         });
     }
 
-    public static class viewAppointmentReqViewHolder extends RecyclerView.ViewHolder {
-        public viewAppointmentReqViewHolder(@NonNull View itemView) {
+    public static class viewAppointmentConfViewHolder extends RecyclerView.ViewHolder {
+        public viewAppointmentConfViewHolder(@NonNull View itemView) {
             super(itemView);
             //mView = itemView;
         }

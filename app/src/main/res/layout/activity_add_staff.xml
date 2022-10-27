@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="25dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="25dp">
 
         <TextView
             android:id="@+id/textView3"
@@ -35,9 +35,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:hint="HOSPITAL ID"
-                android:inputType="none"
-                android:enabled="false"/>
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,44 +111,60 @@
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/staffQualificationLay"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Staff Qualification"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <RadioGroup
             android:id="@+id/radioGroupGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:gravity="start">
+            android:layout_marginTop="20dp"
+            android:gravity="start"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="10dp"
                 android:text="Gender:"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_vertical"
-                android:paddingEnd="10dp"/>
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/radioMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Male"
-                android:textSize="17sp"
-                android:textColor="@color/purple_700"
+                android:onClick="onGenderRadioButtonCLicked"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:onClick="onGenderRadioButtonCLicked"/>
+                android:text="Male"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp" />
 
             <RadioButton
                 android:id="@+id/radioFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Female"
+                android:onClick="onGenderRadioButtonCLicked"
                 android:paddingStart="10dp"
-                android:textSize="17sp"
+                android:text="Female"
                 android:textColor="@color/purple_700"
-                android:onClick="onGenderRadioButtonCLicked"/>
+                android:textSize="17sp" />
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -162,17 +178,17 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:editable="false"
                 android:hint="Gender Here"
-                android:inputType="none"
-                android:editable="false"/>
+                android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/staffRoleLay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -331,7 +347,7 @@
                 android:text="Clear"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/addStaffBtn"
@@ -342,7 +358,7 @@
                 android:text="Add Staff"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

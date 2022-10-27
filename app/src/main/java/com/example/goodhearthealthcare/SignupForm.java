@@ -261,33 +261,27 @@ public class SignupForm extends AppCompatActivity {
                                 mAuth.getCurrentUser().linkWithCredential(credentialAuth).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()){
-                                            if (imageUri != null)
-                                            {
+                                        if (task.isSuccessful()) {
+                                            if (imageUri != null) {
                                                 final StorageReference fileref = storagePicRef.child(userID + ".jpg");
                                                 uploadTask = fileref.putFile(imageUri);
-                                                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot,Task<Uri>>() {
+                                                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                                                     @Override
-                                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception
-                                                    {
-                                                        if (!task.isSuccessful())
-                                                        {
+                                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                                        if (!task.isSuccessful()) {
                                                             throw task.getException();
                                                         }
                                                         return fileref.getDownloadUrl();
                                                     }
-                                                }).addOnCompleteListener(new OnCompleteListener<Uri>()
-                                                {
+                                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                                                     @Override
-                                                    public void onComplete(@NonNull Task<Uri> task)
-                                                    {
-                                                        if (task.isSuccessful())
-                                                        {
+                                                    public void onComplete(@NonNull Task<Uri> task) {
+                                                        if (task.isSuccessful()) {
                                                             Uri downloadUrl = task.getResult();
                                                             myUrl = downloadUrl.toString();
                                                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(userID);
                                                             HashMap<String, Object> userMapImg = new HashMap<String, Object>();
-                                                            userMapImg.put("image",myUrl);
+                                                            userMapImg.put("image", myUrl);
                                                             ref.updateChildren(userMapImg);
 
                                                             Intent intent = new Intent(getApplicationContext(), AddDiseasesActivity.class);
@@ -301,9 +295,7 @@ public class SignupForm extends AppCompatActivity {
                                                         }
                                                     }
                                                 });
-                                            }
-                                            else
-                                            {
+                                            } else {
                                                 Toast.makeText(getApplicationContext(), "No image selected!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
@@ -314,63 +306,10 @@ public class SignupForm extends AppCompatActivity {
                             }
                         }
                     });
-                    /*loadingBar.setTitle("please wait...");
-                    loadingBar.setMessage("creation of account and saving of data is in progress. Don't click back button");
-                    loadingBar.setCanceledOnTouchOutside(false);
-                    loadingBar.show();
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                userId = mAuth.getCurrentUser().getUid();
-                                HashMap patientMap = new HashMap();
-                                patientMap.put("fName", fName);
-                                patientMap.put("lName", lName);
-                                patientMap.put("DOB", dob);
-                                patientMap.put("Age", age);
-                                patientMap.put("Gender", gender);
-                                patientMap.put("MaritalStatus", marital);
-                                patientMap.put("Address", address);
-                                patientMap.put("City", city);
-                                patientMap.put("District", district);
-                                patientMap.put("Pincode", pincode);
-                                patientMap.put("Phone", phone);
-                                patientMap.put("AltPhone", altPhone);
-                                patientMap.put("Email", email);
-                                patientMap.put("Password", password);
-                                patientMap.put("image", "default");
-                                patientMap.put("userID", userId);
-                                patientsRef.child(userId).updateChildren(patientMap).addOnCompleteListener(new OnCompleteListener() {
-                                    @Override
-                                    public void onComplete(@NonNull Task task) {
-                                        if (task.isSuccessful()) {
-                                            Intent intent = new Intent(getApplicationContext(), phoneNumber.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            intent.putExtra("phone",phone);
-                                            intent.putExtra("email",email);
-                                            intent.putExtra("password",password);
-                                            startActivity(intent);
-                                            finish();
-
-                                        } else {
-                                            String msg = task.getException().getMessage();
-                                            Toast.makeText(SignupForm.this, msg, Toast.LENGTH_SHORT).show();
-                                        }
-                                        loadingBar.dismiss();
-                                    }
-                                });
-                            } else {
-                                String msg = task.getException().getMessage();
-                                Toast.makeText(SignupForm.this, "Error: " + msg, Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
-                            }
-                        }
-                    });*/
                 }
             }
         });
 
-        //SPINNER(Dropdown --> In android we call it as Spinner) CODE FOR MARITAL STATUS
         ArrayAdapter<CharSequence> adapter4Marital = ArrayAdapter.createFromResource(this, R.array.marital_array, android.R.layout.simple_spinner_item);
         adapter4Marital.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         marital_spinner.setAdapter(adapter4Marital);
@@ -379,8 +318,6 @@ public class SignupForm extends AppCompatActivity {
 
     public void onRadioButtonCLicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
         switch (view.getId()) {
             case R.id.radioMale:
                 if (checked)
@@ -414,8 +351,6 @@ public class SignupForm extends AppCompatActivity {
             setupProfileImage.setImageURI(imageUri);
         } else {
             Toast.makeText(this, "Error! Try again.", Toast.LENGTH_SHORT).show();
-            //startActivity(new Intent(SetupActivity.this,SetupActivity.class));
-            //finish();
         }
     }
 }
