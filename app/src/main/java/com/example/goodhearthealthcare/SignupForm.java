@@ -295,8 +295,12 @@ public class SignupForm extends AppCompatActivity {
                                                         }
                                                     }
                                                 });
-                                            } else {
-                                                Toast.makeText(getApplicationContext(), "No image selected!", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            else {
+                                                Toast.makeText(getApplicationContext(), "No image selected!", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(getApplicationContext(), AddDiseasesActivity.class);
+                                                startActivity(intent);
                                             }
                                         }
                                     }

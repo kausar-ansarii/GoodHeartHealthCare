@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Before food"
                     android:text="NA"
-                    android:inputType="numberDecimal" />
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:hint="After food"
                     android:text="NA"
-                    android:inputType="numberDecimal" />
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
