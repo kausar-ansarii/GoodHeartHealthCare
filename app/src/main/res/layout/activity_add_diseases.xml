@@ -6,13 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddDiseasesActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="15dp">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +19,6 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:fontFamily="@font/nunito_sans"/>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +27,6 @@
             android:textColor="@color/black"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/nunito_sans"/>
-
         <RadioGroup
             android:id="@+id/radioGroupDiabetic"
             android:layout_width="match_parent"
@@ -39,7 +35,6 @@
             android:gravity="start"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/patientEmailLay">
-
             <RadioButton
                 android:id="@+id/diabeticYes"
                 android:layout_width="wrap_content"
@@ -50,7 +45,6 @@
                 android:text="YES"
                 android:textColor="@color/purple_700"
                 android:textSize="16sp" />
-
             <RadioButton
                 android:id="@+id/diabeticNo"
                 android:layout_width="wrap_content"
@@ -61,7 +55,6 @@
                 android:textColor="@color/purple_700"
                 android:textSize="16sp" />
         </RadioGroup>
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/haveDiabetes"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -70,23 +63,19 @@
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
             android:visibility="gone">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:hint="Have diabetes"
                 android:inputType="none" />
-
         </com.google.android.material.textfield.TextInputLayout>
-
         <LinearLayout
             android:id="@+id/linearDiabetic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="gone">
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
@@ -96,7 +85,6 @@
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="true"
                 app:layout_constraintTop_toBottomOf="@+id/textView3">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/diabeticSince"
                     android:layout_width="match_parent"
@@ -359,7 +347,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -52,7 +52,8 @@ public class phoneNumber extends AppCompatActivity {
                     Toast.makeText(phoneNumber.this, "Phone number must contain exact 10 digits ", Toast.LENGTH_SHORT).show();
                 }
 
-                else {
+                else
+                {
                     Intent intent = new Intent(phoneNumber.this, OTPScreen.class);
                     intent.putExtra("phone",num);
                     /*intent.putExtra("email",email);

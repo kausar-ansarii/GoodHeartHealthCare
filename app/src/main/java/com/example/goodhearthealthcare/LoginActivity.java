@@ -76,6 +76,8 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "No user Found", Toast.LENGTH_LONG).show();
                                     loadingBar.dismiss();
                                 }
+
+
                                 else if (msg.equals("The password is invalid or the user does not have a password.")){
                                         Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
                                         loadingBar.dismiss();

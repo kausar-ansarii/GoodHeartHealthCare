@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".receptionist.ViewLabRequests">
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewLabsTestRequest"
         android:layout_width="match_parent"
@@ -15,7 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
     <TextView
         android:id="@+id/noLabTestReqTxt"
         android:layout_width="match_parent"
@@ -29,5 +27,4 @@
         android:textSize="20sp"
         android:visibility="gone"
         android:fontFamily="@font/nunito_sans"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
