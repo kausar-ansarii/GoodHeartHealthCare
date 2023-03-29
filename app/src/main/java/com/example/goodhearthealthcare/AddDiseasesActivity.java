@@ -100,7 +100,42 @@ public class AddDiseasesActivity extends AppCompatActivity {
                         thyroidSince.setText("NA");
                         thyroidMeasure.setText("NA");
                     }
-                } else {
+                    loadingBar.setMessage("please wait...");
+                    loadingBar.setCanceledOnTouchOutside(false);
+                    loadingBar.show();
+                    HashMap diseasesMap = new HashMap();
+                    diseasesMap.put("HaveDiabetes", hDia);
+                    diseasesMap.put("HavePreMedication", hPreMed);
+                    diseasesMap.put("HaveAllergies", hAller);
+                    diseasesMap.put("HaveThyroid", hThy);
+                    diseasesMap.put("DiabetesSince", dSince);
+                    diseasesMap.put("DiabetesBefore", dBefore);
+                    diseasesMap.put("DiabetesAfter", dAfter);
+                    diseasesMap.put("PreMedSince", pMedSince);
+                    diseasesMap.put("PreMedCause", pMedCause);
+                    diseasesMap.put("AllergiesSince", aSince);
+                    diseasesMap.put("AllergiesCause", aCause);
+                    diseasesMap.put("ThyroidSince", tSince);
+                    diseasesMap.put("ThyroidMeasure", tMeasure);
+                    patientRef.child("OldMedi").updateChildren(diseasesMap).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                                Toast.makeText(AddDiseasesActivity.this, "profile updated...", Toast.LENGTH_SHORT).show();
+                            } else {
+                                String msg = task.getException().getMessage();
+                                Toast.makeText(AddDiseasesActivity.this, msg, Toast.LENGTH_SHORT).show();
+                            }
+                            loadingBar.dismiss();
+                        }
+                    });
+                }
+
+                else {
                     loadingBar.setMessage("please wait...");
                     loadingBar.setCanceledOnTouchOutside(false);
                     loadingBar.show();
