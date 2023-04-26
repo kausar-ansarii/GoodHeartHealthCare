@@ -48,32 +48,43 @@
     <string name="bmr_intro">BMR(Basal metabolic rate) is the rate of energy expenditure per unit time by endothermic animals at rest. It is measured under very restrictive circumstances when a person is awake. An accurate BMR measurement requires that the person\'s sympathetic nervous system not be stimulated.</string>
 
     <string-array name="specialist">
-        <item>Pediatrician</item>
-        <item>Gynecologist</item>
+        <item>Dental,Oral and Maxillofacial Surgeon</item>
+        <item>Family Physician and Surgeon</item>
         <item>Cardiologist</item>
-        <item>Oncologist</item>
-        <item>Gastroenterologist</item>
-        <item>Pulmonologist</item>
-        <item>Nephrologist</item>
-        <item>Endocrinologist</item>
-        <item>Ophthalmologist</item>
-        <item>Otolaryngologist</item>
-        <item>Dermatologist</item>
-        <item>Psychiatrist</item>
-        <item>Neurologist</item>
-        <item>Radiologist</item>
-        <item>Anesthesiologist</item>
+        <item>Dental Surgeon</item>
+        <item>Orthopedic and Joint Replacement Surgeon</item>
+        <item>Sports and Musculoskeletal physiotherapy</item>
+        <item>Prosthodontist and Implantologist</item>
+        <item>Family Physician</item>
+        <item>Orthopedic Surgeon</item>
+        <item>Cosmetologist,Smile designing and Face make over</item>
+        <item>Nutritionist and Diabetes Educator</item>
+        <item>Periodontist and Implantologist</item>
+        <item>General Physician</item>
+        <item>Maxillofacial Surgeon and Implantologist</item>
+        <item>Physiotherapist</item>
         <item>Surgeon</item>
+        <item>Gynaecologist</item>
+        <item>Neurologist</item>
+
+
     </string-array>
 
     <string-array name="labTests">
         <item>CBC</item>
-        <item>BMP</item>
-        <item>CMP</item>
-        <item>Blood Enzyme Test</item>
-        <item>Lipid Panel</item>
-        <item>HbA1C</item>
-        <item>TSH</item>
+        <item>HB</item>
+        <item>E.S.R</item>
+        <item>Blood Group</item>
+        <item>Urine</item>
+        <item>Stool</item>
+        <item>Pregnancy</item>
+        <item>CREATININE</item>
+        <item>CHOLESTROL</item>
+        <item>BILIRUBIN</item>
+        <item>URIC ACID</item>
+        <item>LIVER PROFILE</item>
+        <item>HIV</item>
+        <item>KETONE</item>
     </string-array>
 
 </resources>

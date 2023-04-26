@@ -23,7 +23,7 @@
                 android:padding="8sp"
                 android:textStyle="bold"
                 android:gravity="center_horizontal"
-                android:text="Blood Test"/>
+                android:text="Test"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -58,7 +58,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="$6 to $28"/>
+                android:text="Rs. 100"/>
         </TableRow>
 
         <TableRow
@@ -72,7 +72,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="BMP"/>
+                android:text="HB"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -82,7 +82,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="$8 to $38"/>
+                android:text="Rs. 60"/>
         </TableRow>
 
         <TableRow
@@ -96,7 +96,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="CMP"/>
+                android:text="E.S.R"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -106,7 +106,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="$9 to $45"/>
+                android:text="Rs. 60"/>
         </TableRow>
 
         <TableRow
@@ -120,7 +120,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="Blood enzyme test"/>
+                android:text="Blood Group"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -131,7 +131,7 @@
                 android:padding="8sp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_horizontal"
-                android:text="$11 to $58"/>
+                android:text="Rs. 60"/>
         </TableRow>
 
         <TableRow
@@ -145,7 +145,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="Lipid Panel"/>
+                android:text="Urine"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -155,7 +155,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="$12 to $58"/>
+                android:text="Rs. 60"/>
         </TableRow>
 
         <TableRow
@@ -169,7 +169,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="HbA1C"/>
+                android:text="Stool"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -179,7 +179,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="$10 to $51"/>
+                android:text="Rs. 60"/>
         </TableRow>
 
         <TableRow
@@ -193,7 +193,7 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="TSH"/>
+                android:text="Pregnancy"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -203,7 +203,168 @@
                 android:textSize="17sp"
                 android:padding="8sp"
                 android:gravity="center_horizontal"
-                android:text="$15 to $73"/>
+                android:text="Rs. 100"/>
+        </TableRow>
+        <TableRow
+            android:background="@color/mainColorLight">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/purple_700"
+                android:textSize="15sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="CREATININE"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="Rs. 100"/>
+        </TableRow>
+        <TableRow
+            android:background="@color/mainColorLight">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/purple_700"
+                android:textSize="15sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="CHOLESTROL"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="Rs. 100"/>
+        </TableRow>
+        <TableRow
+            android:background="@color/mainColorLight">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="BILIRUBIN"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="Rs. 100"/>
+        </TableRow>
+        <TableRow
+            android:background="@color/mainColorLight">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="URIC ACID"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="Rs. 100"/>
+        </TableRow>
+        <TableRow
+            android:background="@color/mainColorLight">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="LIVER PROFILE"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="Rs. 300-400"/>
+        </TableRow>
+        <TableRow
+            android:background="@color/mainColorLight">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="HIV"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="Rs. 500-600"/>
+        </TableRow>
+        <TableRow
+            android:background="@color/mainColorLight">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="KETONE"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/purple_700"
+                android:textSize="17sp"
+                android:padding="8sp"
+                android:gravity="center_horizontal"
+                android:text="Rs. 300"/>
         </TableRow>
     </TableLayout>
 </LinearLayout>
