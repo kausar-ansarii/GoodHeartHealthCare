@@ -2,7 +2,6 @@
   <library name="Gradle: androidx.test.espresso:espresso-core:3.1.0-alpha3@aar">
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/a636032c020f5cdb4cbd8b17de6d738e/transformed/espresso-core-3.1.0-alpha3/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a636032c020f5cdb4cbd8b17de6d738e/transformed/espresso-core-3.1.0-alpha3/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a636032c020f5cdb4cbd8b17de6d738e/transformed/espresso-core-3.1.0-alpha3/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
